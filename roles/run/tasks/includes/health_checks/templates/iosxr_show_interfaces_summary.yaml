@@ -1,0 +1,18 @@
+# fmt: off
+[
+  {
+    "name": "",
+    "getval": '''ALL TYPES\s+(?P<total>\d+)\s+(?P<up>\d+)\s+(?P<down>\d+)\s+(?P<admin_down>\d+)\s+$''',
+    "result": {
+    "total": "{{ total }}",
+    "up": "{{ up }}",
+    "down": "{{down}}",
+    "admin_up": "{{up}}",
+    "admin_down": "{{admin_down}}"
+    }
+  },
+
+
+
+]
+# fmt: on

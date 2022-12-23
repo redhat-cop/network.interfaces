@@ -1,0 +1,7 @@
+---
+- name: Parse interfaces summary
+  ansible.utils.cli_parse:
+    command: ""
+    parser:
+      name: ansible.netcommon.content_templates
+    set_fact: interfaces_health
