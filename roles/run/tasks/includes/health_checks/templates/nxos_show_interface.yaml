@@ -1,0 +1,32 @@
+# fmt: off
+[
+      {
+      "name": "interface_name",
+      "getval": '''(?P<name>\S+) is (?P<oper_state>\S+)''',
+      "result": {
+        "nxos_interfaces": {
+            "{{ name }}":
+              {
+                "name": "{{ name }}",
+                "operational": "{{oper_state}}"
+              }
+              }
+
+              },
+      "shared": True
+    },
+  {
+    "name": "interface_admin",
+    "getval": '''admin state is (?P<admin_state>\S+)''',
+    "result": {
+      "nxos_interfaces": {
+        "{{ name }}":
+          {
+            "admin": "{{admin_state}}"
+          }
+      }
+
+    }
+  }
+]
+ # fmt: on
