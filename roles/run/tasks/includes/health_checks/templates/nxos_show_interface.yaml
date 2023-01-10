@@ -4,7 +4,7 @@
       "name": "interface_name",
       "getval": '''(?P<name>\S+) is (?P<oper_state>\S+)''',
       "result": {
-        "nxos_interfaces": {
+        "interfaces": {
             "{{ name }}":
               {
                 "name": "{{ name }}",
@@ -19,7 +19,7 @@
     "name": "interface_admin",
     "getval": '''admin state is (?P<admin_state>\S+)''',
     "result": {
-      "nxos_interfaces": {
+      "interfaces": {
         "{{ name }}":
           {
             "admin": "{{admin_state}}"
