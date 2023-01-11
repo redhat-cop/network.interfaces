@@ -1,0 +1,19 @@
+# fmt: off
+[
+      {
+      "name": "interface_name",
+      "getval": '''Physical interface: (?P<name>\S+) (?P<oper_state>Enabled,) Physical link is (?P<operational_state>\S+)''',
+      "result": {
+        "interfaces": {
+            "{{ name }}":
+              {
+                "name": "{{ name }}",
+                "admin": "{{'up' if oper_state is defined }}",
+                "operational": "{{operational_state}}"
+              }
+              }
+
+              },
+    }
+]
+ # fmt: on

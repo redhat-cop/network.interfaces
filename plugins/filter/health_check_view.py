@@ -88,7 +88,7 @@ EXAMPLES = r"""
 
 RETURN = """
   health_checks:
-    description: BGP health checks 
+    description: INTERFACE health checks 
     type: dict
 
 """
@@ -96,6 +96,29 @@ RETURN = """
 from ansible.errors import AnsibleFilterError
 
 ARGSPEC_CONDITIONALS = {}
+
+def _process_health_facts(health_facts):
+    """
+
+    """
+    interface_status_summary = {
+        "total": len(health_facts.keys()),
+        "up": 0,
+        "down": 0,
+        "admin_up": 0,
+        "admin_down": 0
+    }
+    for interface in health_facts.values():
+        if "up" in interface.get("admin") or "Up" in interface.get("admin"):
+            interface_status_summary["admin_up"]+=1
+        else:
+            interface_status_summary["admin_down"] += 1
+
+        if "up" in interface.get("operational") or "Up" in interface.get("operational"):
+            interface_status_summary["up"]+=1
+        else:
+            interface_status_summary["down"] += 1
+    return interface_status_summary
 
 
 def health_check_view(*args, **kwargs):
@@ -110,6 +133,9 @@ def health_check_view(*args, **kwargs):
 
     health_facts = data["health_facts"]
     target = data["target"]
+    if "interfaces" in health_facts:
+        health_facts = _process_health_facts(health_facts["interfaces"])
+
     health_checks = {}
     if target['name'] == 'health_check':
         h_checks = target.get('vars')
