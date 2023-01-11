@@ -111,70 +111,72 @@ def health_check_view(*args, **kwargs):
     health_facts = data["health_facts"]
     target = data["target"]
     health_checks = {}
-    if target['name'] == 'health_check':
-        vars = target.get('vars')
+    if target["name"] == "health_check":
+        vars = target.get("vars")
         if vars:
-            checks = vars.get('checks')
+            checks = vars.get("checks")
             stats = health_facts
-            if is_present(checks, 'all_operational_state_up'):
+            if is_present(checks, "all_operational_state_up"):
                 details = {}
                 n_dict = {}
                 n_dict.update(stats)
-                if vars.get('details'):
-                    n_dict['details'] = details
-                n_dict['check_status'] = get_status(health_facts, 'up')
-                health_checks['all_operational_state_up'] = n_dict
+                if vars.get("details"):
+                    n_dict["details"] = details
+                n_dict["check_status"] = get_status(health_facts, "up")
+                health_checks["all_operational_state_up"] = n_dict
 
-            if is_present(checks, 'all_operational_state_down'):
+            if is_present(checks, "all_operational_state_down"):
                 details = {}
                 n_dict = {}
                 n_dict.update(stats)
-                if vars.get('details'):
-                    n_dict['details'] = details
-                n_dict['check_status'] = get_status(health_facts, 'up')
-                health_checks['all_operational_state_down'] = n_dict
-            if is_present(checks, 'all_administratnal_state_up'):
+                if vars.get("details"):
+                    n_dict["details"] = details
+                n_dict["check_status"] = get_status(health_facts, "up")
+                health_checks["all_operational_state_down"] = n_dict
+            if is_present(checks, "all_administratnal_state_up"):
                 details = {}
                 n_dict = {}
                 n_dict.update(stats)
-                if vars.get('details'):
-                    n_dict['details'] = details
-                n_dict['check_status'] = get_status(health_facts, 'up')
-                health_checks['all_administratnal_state_up'] = n_dict
+                if vars.get("details"):
+                    n_dict["details"] = details
+                n_dict["check_status"] = get_status(health_facts, "up")
+                health_checks["all_administratnal_state_up"] = n_dict
 
-            if is_present(checks, 'all_administratnal_state_down'):
+            if is_present(checks, "all_administratnal_state_down"):
                 details = {}
                 n_dict = {}
                 n_dict.update(stats)
-                if vars.get('details'):
-                    n_dict['details'] = details
-                n_dict['check_status'] = get_status(health_facts, 'up')
-                health_checks['all_administratnal_state_down'] = n_dict
+                if vars.get("details"):
+                    n_dict["details"] = details
+                n_dict["check_status"] = get_status(health_facts, "up")
+                health_checks["all_administratnal_state_down"] = n_dict
 
-            opr = is_present(checks, 'min_operational_up')
+            opr = is_present(checks, "min_operational_up")
             if opr:
                 n_dict = {}
                 details = {}
                 n_dict.update(stats)
-                if vars.get('details'):
-                    n_dict['details'] = details
-                n_dict['check_status'] = get_status(stats, 'min', opr['min_count'])
-                health_checks['min_operational_up'] = n_dict
+                if vars.get("details"):
+                    n_dict["details"] = details
+                n_dict["check_status"] = get_status(
+                    stats, "min", opr["min_count"]
+                )
+                health_checks["min_operational_up"] = n_dict
         else:
             health_checks = health_facts
     return health_checks
 
 
 def get_status(stats, check, count=None):
-    if check in ('up', 'down'):
-        return 'successful' if stats['total'] == stats[check] else 'failed'
+    if check in ("up", "down"):
+        return "successful" if stats["total"] == stats[check] else "failed"
     else:
-        return 'successful' if count <= stats['up'] else 'failed'
+        return "successful" if count <= stats["up"] else "failed"
 
 
 def is_present(health_checks, option):
     for item in health_checks:
-        if item['name'] == option:
+        if item["name"] == option:
             return item
     return None
 

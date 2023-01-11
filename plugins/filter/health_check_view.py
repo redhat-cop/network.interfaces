@@ -97,25 +97,26 @@ from ansible.errors import AnsibleFilterError
 
 ARGSPEC_CONDITIONALS = {}
 
-def _process_health_facts(health_facts):
-    """
 
-    """
+def _process_health_facts(health_facts):
+    """ """
     interface_status_summary = {
         "total": len(health_facts.keys()),
         "up": 0,
         "down": 0,
         "admin_up": 0,
-        "admin_down": 0
+        "admin_down": 0,
     }
     for interface in health_facts.values():
         if "up" in interface.get("admin") or "Up" in interface.get("admin"):
-            interface_status_summary["admin_up"]+=1
+            interface_status_summary["admin_up"] += 1
         else:
             interface_status_summary["admin_down"] += 1
 
-        if "up" in interface.get("operational") or "Up" in interface.get("operational"):
-            interface_status_summary["up"]+=1
+        if "up" in interface.get("operational") or "Up" in interface.get(
+            "operational"
+        ):
+            interface_status_summary["up"] += 1
         else:
             interface_status_summary["down"] += 1
     return interface_status_summary
@@ -137,57 +138,70 @@ def health_check_view(*args, **kwargs):
         health_facts = _process_health_facts(health_facts["interfaces"])
 
     health_checks = {}
-    if target['name'] == 'health_check':
-        h_checks = target.get('vars')
+    if target["name"] == "health_check":
+        h_checks = target.get("vars")
         if h_checks:
-            checks = h_checks.get('checks')
+            checks = h_checks.get("checks")
             stats = health_facts
-            health_checks.update({"interfaces_summery":stats})
-            if is_present(checks, 'all_operational_state_up'):
-                int_dict = {'check_status': get_status(health_facts, 'up')}
-                health_checks['all_operational_state_up'] = int_dict
+            health_checks.update({"interfaces_summery": stats})
+            if is_present(checks, "all_operational_state_up"):
+                int_dict = {"check_status": get_status(health_facts, "up")}
+                health_checks["all_operational_state_up"] = int_dict
 
-            if is_present(checks, 'all_operational_state_down'):
-                int_dict = {'check_status': get_status(health_facts, 'down')}
-                health_checks['all_operational_state_down'] = int_dict
-            if is_present(checks, 'all_administratnal_state_up'):
-                int_dict = {'check_status': get_admin_status(health_facts, 'admin_up')}
-                health_checks['all_administratnal_state_up'] = int_dict
+            if is_present(checks, "all_operational_state_down"):
+                int_dict = {"check_status": get_status(health_facts, "down")}
+                health_checks["all_operational_state_down"] = int_dict
+            if is_present(checks, "all_administratnal_state_up"):
+                int_dict = {
+                    "check_status": get_admin_status(health_facts, "admin_up")
+                }
+                health_checks["all_administratnal_state_up"] = int_dict
 
-            if is_present(checks, 'all_administratnal_state_down'):
-                int_dict = {'check_status': get_admin_status(health_facts, 'admin_down')}
-                health_checks['all_administratnal_state_down'] = int_dict
+            if is_present(checks, "all_administratnal_state_down"):
+                int_dict = {
+                    "check_status": get_admin_status(
+                        health_facts, "admin_down"
+                    )
+                }
+                health_checks["all_administratnal_state_down"] = int_dict
 
-            opr = is_present(checks, 'min_operational_state_up')
+            opr = is_present(checks, "min_operational_state_up")
             if opr:
-                int_dict = {'check_status': get_status(stats, 'min', opr['min_count'])}
-                health_checks['min_operational_state_up'] = int_dict
+                int_dict = {
+                    "check_status": get_status(stats, "min", opr["min_count"])
+                }
+                health_checks["min_operational_state_up"] = int_dict
 
-            opr = is_present(checks, 'min_administratnal_state_up')
+            opr = is_present(checks, "min_administratnal_state_up")
             if opr:
-                int_dict = {'check_status': get_admin_status(stats, 'min', opr['min_count'])}
-                health_checks['min_administratnal_state_up'] = int_dict
+                int_dict = {
+                    "check_status": get_admin_status(
+                        stats, "min", opr["min_count"]
+                    )
+                }
+                health_checks["min_administratnal_state_up"] = int_dict
         else:
             health_checks = health_facts
     return health_checks
 
 
 def get_status(stats, check, count=None):
-    if check in ('up', 'down'):
-        return 'successful' if stats['total'] == stats[check] else 'failed'
+    if check in ("up", "down"):
+        return "successful" if stats["total"] == stats[check] else "failed"
     else:
-        return 'successful' if count <= stats['up'] else 'failed'
+        return "successful" if count <= stats["up"] else "failed"
+
 
 def get_admin_status(stats, check, count=None):
-    if check in ('admin_up', 'admin_down'):
-        return 'successful' if stats['total'] == stats[check] else 'failed'
+    if check in ("admin_up", "admin_down"):
+        return "successful" if stats["total"] == stats[check] else "failed"
     else:
-        return 'successful' if count <= stats['admin_up'] else 'failed'
+        return "successful" if count <= stats["admin_up"] else "failed"
 
 
 def is_present(health_checks, option):
     for item in health_checks:
-        if item['name'] == option:
+        if item["name"] == option:
             return item
     return None
 
