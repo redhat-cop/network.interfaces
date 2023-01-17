@@ -5,7 +5,7 @@ __metaclass__ = type
 
 DOCUMENTATION = """
     name: health_check_view
-    author: Rohit Thakur (@rohitthakur2590)
+    author: Ashwini Mhatre (@amhatre)
     version_added: "1.0.0"
     short_description: Generate the filtered health check dict based on the provided target.
     description:
@@ -17,53 +17,58 @@ DOCUMENTATION = """
 """
 
 EXAMPLES = r"""
-- set_fact:
-   "health_facts":{
-   "down_peer_count":"",
-   "group_count":"",
-   "neighbors":[
-      {
-         "msg_rcvd":3839,
-         "msg_sent":3834,
-         "path":{
-            "memory_usage":168,
-            "total_entries":2
-         },
-         "peer":"12.0.0.1",
-         "peer_as":500,
-         "peer_state":"1",
-         "total_memory":776
-      },
-      {
-         "msg_rcvd":0,
-         "msg_sent":0,
-         "path":{
-            "memory_usage":168,
-            "total_entries":2
-         },
-         "peer":"23.0.0.1",
-         "peer_as":500,
-         "peer_state":"Idle",
-         "total_memory":776
-      }
-   ],
-   "peer_count":""
-}
 
+- set_fact:
+   "health_facts": {
+        "interfaces_health": {
+            "interfaces": {
+                "GigabitEthernet1": {
+                    "admin": "up,",
+                    "name": "GigabitEthernet1",
+                    "operational": "up,"
+                },
+                "GigabitEthernet2": {
+                    "admin": "down,",
+                    "name": "GigabitEthernet2",
+                    "operational": "down,"
+                },
+                "GigabitEthernet3": {
+                    "admin": "down,",
+                    "name": "GigabitEthernet3",
+                    "operational": "down,"
+                },
+                "GigabitEthernet4": {
+                    "admin": "down,",
+                    "name": "GigabitEthernet4",
+                    "operational": "down,"
+                }
+            }
+        }
+    }
 - set_fact:
     "action": {
    "name":"health_check",
    "vars":{
       "checks":[
          {
-            "name":"all_neighbors_up"
+            "name":"all_operational_state_up"
          },
          {
-            "name":"all_neighbors_down"
+            "name":"all_operational_state_down"
          },
          {
-            "min_count":1,
-            "name":"min_neighbors_up"
+            "name":"all_administratnal_state_up"
+         },
+         {
+            "name":"all_administratnal_state_down"
+         },
+         {
+            "name":"min_operational_state_up",
+            "min_count": 1
+         },
+         {
+            "name":"min_operational_state_down",
+            "min_count": 2
          }
       ]
    }
@@ -88,7 +93,7 @@ EXAMPLES = r"""
 
 RETURN = """
   health_checks:
-    description: INTERFACE health checks 
+    description:INTERFACES health checks 
     type: dict
 
 """
