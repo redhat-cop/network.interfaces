@@ -17,78 +17,61 @@ DOCUMENTATION = """
 """
 
 EXAMPLES = r"""
+- name: Perform interfaces health checks
+  hosts: iosxr
+  gather_facts: false
+  tasks:
+  - name: INTERFACES Manager
+    ansible.builtin.include_role:
+      name: network.interfaces.run
+    vars:
+      actions:
+        - name: health_check
+          vars:
+            details: True
+            checks:
+              - name: all_operational_state_up
+              - name: all_operational_state_down
+              - name: min_operational_state_up
+                min_count: 1
+              - name: all_administratnal_state_up
+              - name: all_administratnal_state_down
+              - name: min_administratnal_state_up
+                min_count: 1
 
-- set_fact:
-   "health_facts": {
-        "interfaces_health": {
-            "interfaces": {
-                "GigabitEthernet1": {
-                    "admin": "up,",
-                    "name": "GigabitEthernet1",
-                    "operational": "up,"
-                },
-                "GigabitEthernet2": {
-                    "admin": "down,",
-                    "name": "GigabitEthernet2",
-                    "operational": "down,"
-                },
-                "GigabitEthernet3": {
-                    "admin": "down,",
-                    "name": "GigabitEthernet3",
-                    "operational": "down,"
-                },
-                "GigabitEthernet4": {
-                    "admin": "down,",
-                    "name": "GigabitEthernet4",
-                    "operational": "down,"
-                }
-            }
-        }
-    }
-- set_fact:
-    "action": {
-   "name":"health_check",
-   "vars":{
-      "checks":[
-         {
-            "name":"all_operational_state_up"
-         },
-         {
-            "name":"all_operational_state_down"
-         },
-         {
-            "name":"all_administratnal_state_up"
-         },
-         {
-            "name":"all_administratnal_state_down"
-         },
-         {
-            "name":"min_operational_state_up",
-            "min_count": 1
-         },
-         {
-            "name":"min_operational_state_down",
-            "min_count": 2
-         }
-      ]
-   }
-} 
-
-- name: Get final list of parameters
-  register: result
-  set_fact:
-    final_params: "{{ health_facts|health_check_view(action) }}"
-
-# TASK [Target list] **********************************************************
-# ok: [localhost] => {
-#     "msg": {
-#         "actionable": [
-#             "2",
-#             "4"
-#         ],
-#         "unsupported": []
+# TASK [network.interfaces.run : INTERFACES health checks] *************************************************************************************************************************
+# [WARNING]: Persistent connection logging is enabled for 10.0.150.115. This will log ALL interactions and WILL NOT redact sensitive configuration like passwords. USE WITH
+# CAUTION!
+# ok: [10.0.150.115] => {
+#     "health_checks": {
+#         "all_administratnal_state_down": {
+#             "check_status": "failed"
+#         },
+#         "all_administratnal_state_up": {
+#             "check_status": "failed"
+#         },
+#         "all_operational_state_down": {
+#             "check_status": "failed"
+#         },
+#         "all_operational_state_up": {
+#             "check_status": "failed"
+#         },
+#         "interfaces_summery": {
+#             "admin_down": 4,
+#             "admin_up": 3,
+#             "down": 0,
+#             "total": 7,
+#             "up": 3
+#         },
+#         "min_administratnal_state_up": {
+#             "check_status": "successful"
+#         },
+#         "min_operational_state_up": {
+#             "check_status": "successful"
+#         }
 #     }
-# }
+}
+
 """
 
 RETURN = """

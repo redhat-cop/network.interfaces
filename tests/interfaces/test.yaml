@@ -1,5 +1,0 @@
----
-- hosts: iosxr
-  gather_facts: false
-  roles:
-    - tests

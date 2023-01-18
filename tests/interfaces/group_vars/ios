@@ -1,9 +1,0 @@
-#ansible_connection: network_cli
-ansible_network_os: cisco.ios.ios
-ansible_user: ansible
-ansible_password: ansible
-#ansible_user: vagrant
-#ansible_password: vagrant
-#ansible_ssh_port: 2223
-#ansible_network_cli_ssh_type: libssh
-netconf: {'transport': 'netconf'}
