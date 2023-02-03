@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
 
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -30,47 +31,77 @@ EXAMPLES = r"""
           vars:
             details: True
             checks:
+              - name: any_state_up
               - name: all_operational_state_up
-              - name: all_operational_state_down
               - name: min_operational_state_up
                 min_count: 1
-              - name: all_administratnal_state_up
-              - name: all_administratnal_state_down
-              - name: min_administratnal_state_up
+              - name: all_admin_state_up
+              - name: min_admin_state_up
                 min_count: 1
 
-# TASK [network.interfaces.run : INTERFACES health checks] *************************************************************************************************************************
-# [WARNING]: Persistent connection logging is enabled for 10.0.150.115. This will log ALL interactions and WILL NOT redact sensitive configuration like passwords. USE WITH
-# CAUTION!
-# ok: [10.0.150.115] => {
+# TASK [network.interfaces.run : INTERFACES health checks] ***********************
+# task path: /Users/amhatre/ansible-collections/collections/ansible_collections/network/interfaces/roles/run/tasks/includes/health_check.yaml:10
+# ok: [10.0.150.231] => {
 #     "health_checks": {
-#         "all_administratnal_state_down": {
-#             "check_status": "failed"
-#         },
-#         "all_administratnal_state_up": {
-#             "check_status": "failed"
-#         },
-#         "all_operational_state_down": {
-#             "check_status": "failed"
+#         "all_admin_state_up": {
+#             "check_status": "successful",
+#             "interfaces_status_summery": {
+#                 "admin_down": 0,
+#                 "admin_up": 4,
+#                 "down": 0,
+#                 "total": 4,
+#                 "up": 4
+#             }
 #         },
 #         "all_operational_state_up": {
-#             "check_status": "failed"
+#             "check_status": "successful",
+#             "interfaces_status_summery": {
+#                 "admin_down": 0,
+#                 "admin_up": 4,
+#                 "down": 0,
+#                 "total": 4,
+#                 "up": 4
+#             }
 #         },
-#         "interfaces_summery": {
-#             "admin_down": 4,
-#             "admin_up": 3,
-#             "down": 0,
-#             "total": 7,
-#             "up": 3
+#         "any_state_up": {
+#             "check_status": "successful",
+#             "interfaces_status_summery": {
+#                 "admin_down": 0,
+#                 "admin_up": 4,
+#                 "down": 0,
+#                 "total": 4,
+#                 "up": 4
+#             }
 #         },
-#         "min_administratnal_state_up": {
-#             "check_status": "successful"
+#         "min_admin_state_up": {
+#             "check_status": "successful",
+#             "interfaces_status_summery": {
+#                 "admin_down": 0,
+#                 "admin_up": 4,
+#                 "down": 0,
+#                 "total": 4,
+#                 "up": 4
+#             }
 #         },
 #         "min_operational_state_up": {
-#             "check_status": "successful"
+#             "check_status": "successful",
+#             "interfaces_status_summery": {
+#                 "admin_down": 0,
+#                 "admin_up": 4,
+#                 "down": 0,
+#                 "total": 4,
+#                 "up": 4
+#             }
 #         }
 #     }
-}
+# }
+# META: role_complete for 10.0.150.231
+# META: ran handlers
+# META: ran handlers
+# 
+# PLAY RECAP *********************************************************************
+# 10.0.150.231               : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
 
 """
 
@@ -121,70 +152,86 @@ def health_check_view(*args, **kwargs):
         )
 
     health_facts = data["health_facts"]
+    detailed_health_facts = health_facts
     target = data["target"]
     if "interfaces" in health_facts:
         health_facts = _process_health_facts(health_facts["interfaces"])
 
     health_checks = {}
     if target["name"] == "health_check":
-        h_checks = target.get("vars")
-        if h_checks:
-            checks = h_checks.get("checks")
+        h_vars = target.get("vars")
+        if h_vars:
+            checks = h_vars.get("checks")
+            ignore_errors = h_vars.get("ignore_errors")
+            details = h_vars.get("details")
             stats = health_facts
-            health_checks.update({"interfaces_summery": stats})
             if is_present(checks, "all_operational_state_up"):
                 int_dict = {"check_status": get_status(health_facts, "up")}
+                int_dict.update({"interfaces_status_summery": stats})
                 health_checks["all_operational_state_up"] = int_dict
-
-            if is_present(checks, "all_operational_state_down"):
-                int_dict = {"check_status": get_status(health_facts, "down")}
-                health_checks["all_operational_state_down"] = int_dict
-            if is_present(checks, "all_administratnal_state_up"):
+            if is_present(checks, "all_admin_state_up"):
                 int_dict = {
                     "check_status": get_admin_status(health_facts, "admin_up")
                 }
-                health_checks["all_administratnal_state_up"] = int_dict
-
-            if is_present(checks, "all_administratnal_state_down"):
-                int_dict = {
-                    "check_status": get_admin_status(
-                        health_facts, "admin_down"
-                    )
-                }
-                health_checks["all_administratnal_state_down"] = int_dict
+                int_dict.update({"interfaces_status_summery": stats})
+                health_checks["all_admin_state_up"] = int_dict
 
             opr = is_present(checks, "min_operational_state_up")
             if opr:
                 int_dict = {
                     "check_status": get_status(stats, "min", opr["min_count"])
                 }
+                int_dict.update({"interfaces_status_summery": stats})
                 health_checks["min_operational_state_up"] = int_dict
 
-            opr = is_present(checks, "min_administratnal_state_up")
+            opr = is_present(checks, "min_admin_state_up")
             if opr:
                 int_dict = {
                     "check_status": get_admin_status(
                         stats, "min", opr["min_count"]
                     )
                 }
-                health_checks["min_administratnal_state_up"] = int_dict
+                int_dict.update({"interfaces_status_summery": stats})
+                health_checks["min_admin_state_up"] = int_dict
+            opr = is_present(checks, "any_state_up")
+            if opr:
+                int_oper = get_status(stats, "min", 1)
+                int_admin = get_admin_status(stats, "min", 1)
+                if int_oper == "successful" or int_admin == "successful":
+                    check_status = "successful"
+                else:
+                    check_status = "unsuccessful"
+                int_dict = {
+                    "check_status": check_status
+                }
+                int_dict.update({"interfaces_status_summery": stats})
+                health_checks["any_state_up"] = int_dict
+
         else:
             health_checks = health_facts
+    fail_task(health_checks, ignore_errors)
+
+    if details:
+        health_checks.update({"detailed_interface_status_summery": detailed_health_facts})
     return health_checks
 
+def fail_task(health_facts, ignore_errors):
+    for i in health_facts.values():
+        if i.get("check_status") == "unsuccessful" and not ignore_errors:
+            raise AnsibleFilterError("Failed to get some health checks")
 
 def get_status(stats, check, count=None):
     if check in ("up", "down"):
-        return "successful" if stats["total"] == stats[check] else "failed"
+        return "successful" if stats["total"] == stats[check] else "unsuccessful"
     else:
-        return "successful" if count <= stats["up"] else "failed"
+        return "successful" if count <= stats["up"] else "unsuccessful"
 
 
 def get_admin_status(stats, check, count=None):
     if check in ("admin_up", "admin_down"):
-        return "successful" if stats["total"] == stats[check] else "failed"
+        return "successful" if stats["total"] == stats[check] else "unsuccessful"
     else:
-        return "successful" if count <= stats["admin_up"] else "failed"
+        return "successful" if count <= stats["admin_up"] else "unsuccessful"
 
 
 def is_present(health_checks, option):
