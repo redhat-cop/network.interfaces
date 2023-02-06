@@ -162,63 +162,47 @@ def health_check_view(*args, **kwargs):
         h_vars = target.get("vars")
         if h_vars:
             checks = h_vars.get("checks")
-            ignore_errors = h_vars.get("ignore_errors")
             details = h_vars.get("details")
-            stats = health_facts
-            if is_present(checks, "all_operational_state_up"):
-                int_dict = {"check_status": get_status(health_facts, "up")}
-                int_dict.update({"interfaces_status_summery": stats})
-                health_checks["all_operational_state_up"] = int_dict
-            if is_present(checks, "all_admin_state_up"):
-                int_dict = {
-                    "check_status": get_admin_status(health_facts, "admin_up")
-                }
-                int_dict.update({"interfaces_status_summery": stats})
-                health_checks["all_admin_state_up"] = int_dict
-
-            opr = is_present(checks, "min_operational_state_up")
-            if opr:
-                int_dict = {
-                    "check_status": get_status(stats, "min", opr["min_count"])
-                }
-                int_dict.update({"interfaces_status_summery": stats})
-                health_checks["min_operational_state_up"] = int_dict
-
-            opr = is_present(checks, "min_admin_state_up")
-            if opr:
-                int_dict = {
-                    "check_status": get_admin_status(
-                        stats, "min", opr["min_count"]
-                    )
-                }
-                int_dict.update({"interfaces_status_summery": stats})
-                health_checks["min_admin_state_up"] = int_dict
-            opr = is_present(checks, "any_state_up")
-            if opr:
-                int_oper = get_status(stats, "min", 1)
-                int_admin = get_admin_status(stats, "min", 1)
-                if int_oper == "successful" or int_admin == "successful":
-                    check_status = "successful"
-                else:
-                    check_status = "unsuccessful"
-                int_dict = {
-                    "check_status": check_status
-                }
-                int_dict.update({"interfaces_status_summery": stats})
-                health_checks["any_state_up"] = int_dict
-
+            for i in ["all_operational_state_up", "all_admin_state_up", "min_operational_state_up", "min_admin_state_up","any_state_up" ]:
+                #import epdb;epdb.serve()
+                option, int_dict, status = process_stats(i, health_facts, checks)
+                health_checks.update({option: int_dict})
+                if status:
+                    health_checks.update({"status": status})
         else:
             health_checks = health_facts
-    fail_task(health_checks, ignore_errors)
-
     if details:
         health_checks.update({"detailed_interface_status_summery": detailed_health_facts})
+    if "status" not in health_checks:
+        health_checks['status'] = "successful"
     return health_checks
 
-def fail_task(health_facts, ignore_errors):
-    for i in health_facts.values():
-        if i.get("check_status") == "unsuccessful" and not ignore_errors:
-            raise AnsibleFilterError("Failed to get some health checks")
+
+def process_stats(option, health_facts, checks):
+    opr = is_present(checks, option)
+    status = None
+    if opr:
+        if option == "all_admin_state_up":
+            check_status = get_admin_status(health_facts, "admin_up")
+        elif option == "min_operational_state_up":
+            check_status = get_status(health_facts, "min", opr["min_count"])
+        elif option == "min_admin_state_up":
+            check_status = get_admin_status(health_facts, "min", opr["min_count"])
+        elif option == "any_state_up":
+            int_oper = get_status(health_facts, "min", 1)
+            int_admin = get_admin_status(health_facts, "min", 1)
+            if int_oper == "successful" or int_admin == "successful":
+                check_status = "successful"
+            else:
+                check_status = "unsuccessful"
+        else:
+            check_status = get_status(health_facts, "up")
+        int_dict = {"check_status": check_status}
+        int_dict.update({"interfaces_status_summery": health_facts})
+        if check_status == "unsuccessful" and not opr.get("ignore_errors"):
+            status = 'unsuccessful'
+    return option, int_dict, status
+
 
 def get_status(stats, check, count=None):
     if check in ("up", "down"):
