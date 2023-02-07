@@ -7,7 +7,7 @@
     "total": "{{ total }}",
     "up": "{{ up }}",
     "down": "{{down}}",
-    "admin_up": "{{up}}",
+    "admin_up": "{{ total }} - {{admin_down}}",
     "admin_down": "{{admin_down}}"
     }
   },
