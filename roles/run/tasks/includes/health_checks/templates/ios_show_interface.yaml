@@ -2,14 +2,14 @@
 [
       {
       "name": "interface_name",
-      "getval": '''(?P<name>\S+) is (administratively )?(?P<oper_state>\S+)''',
+      "getval": '''(?P<name>\S+) is (administratively )?(?P<admin_state>\S+), line protocol is (?P<oper_state>\S+) ''',
       "result": {
         "interfaces": {
             "{{ name }}":
               {
                 "name": "{{ name }}",
-                "operational": "{{oper_state}}",
-                "admin": "{{oper_state}}"
+                "operational": "{{oper_state }}",
+                "admin": "{{admin_state}}"
               }
               }
 

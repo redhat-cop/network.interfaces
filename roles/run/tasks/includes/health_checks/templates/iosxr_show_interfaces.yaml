@@ -1,0 +1,17 @@
+[
+      {
+      "name": "interface_name",
+      "getval": '''(?P<name>\S+) is (?P<admin_state>administratively )?(?P<oper_state>\S+)''',
+      "result": {
+        "interfaces": {
+            "{{ name }}":
+              {
+                "name": "{{ name }}",
+                "operational": "{{ 'NA' if admin_state is defined else oper_state}}",
+                "admin": "{{'down' if admin_state is defined else 'up'}}"
+              }
+              }
+
+        }
+    }
+]

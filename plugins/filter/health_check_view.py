@@ -127,6 +127,7 @@ def _process_health_facts(health_facts):
         "admin_down": 0,
     }
     for interface in health_facts.values():
+
         if "up" in interface.get("admin") or "Up" in interface.get("admin"):
             interface_status_summary["admin_up"] += 1
         else:
@@ -136,7 +137,9 @@ def _process_health_facts(health_facts):
             "operational"
         ):
             interface_status_summary["up"] += 1
-        else:
+        elif"down" in interface.get("operational") or "Down" in interface.get(
+            "operational"
+        ):
             interface_status_summary["down"] += 1
     return interface_status_summary
 
@@ -163,8 +166,7 @@ def health_check_view(*args, **kwargs):
         if h_vars:
             checks = h_vars.get("checks")
             details = h_vars.get("details")
-            for i in ["all_operational_state_up", "all_admin_state_up", "min_operational_state_up", "min_admin_state_up","any_state_up" ]:
-                #import epdb;epdb.serve()
+            for i in ["all_operational_state_up", "all_admin_state_up", "min_operational_state_up", "min_admin_state_up" ]:
                 option, int_dict, status = process_stats(i, health_facts, checks)
                 health_checks.update({option: int_dict})
                 if status:
@@ -188,13 +190,6 @@ def process_stats(option, health_facts, checks):
             check_status = get_status(health_facts, "min", opr["min_count"])
         elif option == "min_admin_state_up":
             check_status = get_admin_status(health_facts, "min", opr["min_count"])
-        elif option == "any_state_up":
-            int_oper = get_status(health_facts, "min", 1)
-            int_admin = get_admin_status(health_facts, "min", 1)
-            if int_oper == "successful" or int_admin == "successful":
-                check_status = "successful"
-            else:
-                check_status = "unsuccessful"
         else:
             check_status = get_status(health_facts, "up")
         int_dict = {"check_status": check_status}
