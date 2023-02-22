@@ -14,10 +14,8 @@ The `network.interfaces` enables user to manage the Interfaces resources indepen
 ### Usage
 - This platform agnostic role enables the user to perform INTERFACES health checks.Users can perform following health checks:
        `all_operational_state_up`
-       `all_operational_state_down` 
        `min_operational_state_up`
        `all_administratnal_state_up`
-       `all_administratnal_state_down` 
        `min_administratnal_state_up`
       
   
@@ -43,11 +41,9 @@ health_checks.yml
             details: True
             checks:
               - name: all_operational_state_up
-              - name: all_operational_state_down 
               - name: min_operational_state_up
                 min_count: 1
               - name: all_administratnal_state_up
-              - name: all_administratnal_state_down 
               - name: min_administratnal_state_up
                 min_count: 1
 ```
@@ -102,6 +98,38 @@ health_checks.yml
     vars:
       actions:
         - name: deploy
+```
+
+#### Detect configuration drift in INTERFACES Configuration
+- Detect operation will read the facts from the provided/default inventory and detect if any configuration changes are there on the appliances using overridden state.
+
+```yaml
+- name: 
+  hosts: iosxr
+  gather_facts: false
+  tasks:
+  - name: INTERFACES Manager
+    include_role:
+      name: network.interfaces.run
+    vars:
+      actions:
+        - name: detect
+```
+
+#### Remediate configuration drift in INTERFACES Configuration
+- Remediate operation will read the facts from the provided/default inventory and Remediate if any configuration changes are there on the appliances using overridden state.
+
+```yaml
+- name: 
+  hosts: iosxr
+  gather_facts: false
+  tasks:
+  - name: INTERFACES Manager
+    include_role:
+      name: network.interfaces.run
+    vars:
+      actions:
+        - name: remediate
 ```
 ### Code of Conduct
 This collection follows the Ansible project's
