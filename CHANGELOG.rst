@@ -8,7 +8,7 @@ Network Interfaces Collection Release Notes
 v1.0.0
 ======
 
-Minor Changes
+Major Changes
 -------------
 
 - Add Network INTERFACES role.
