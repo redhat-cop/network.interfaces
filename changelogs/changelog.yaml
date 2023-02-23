@@ -4,9 +4,9 @@ releases:
     changes:
       doc_changes:
       - Add docs for Remediate and Detect action.
-      minor_changes:
+      major_changes:
       - Add Network INTERFACES role.
     fragments:
     - add_docs.yaml
     - add_network_interfaces.yaml
-    release_date: '2023-02-22'
+    release_date: '2023-02-23'
