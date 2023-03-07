@@ -2,6 +2,8 @@ ancestor: null
 releases:
   1.0.0:
     changes:
+      bugfixes:
+      - Fix collection name in galaxy.yaml.
       doc_changes:
       - Add docs for Remediate and Detect action.
       major_changes:
@@ -9,4 +11,5 @@ releases:
     fragments:
     - add_docs.yaml
     - add_network_interfaces.yaml
+    - fix_collection_name.yaml
     release_date: '2023-02-23'
