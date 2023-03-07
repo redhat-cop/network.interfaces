@@ -5,7 +5,7 @@ dependencies:
   "ansible.netcommon": ">=4.1.0"
   "ansible.utils": ">=2.7.0"
 license_file: LICENSE
-name: bgp
+name: interfaces
 description: Ansible Network INTERFACES enables user to manage the INTERFACES resources independent of platforms and perform INTERFACEShealth checks.
 namespace: network
 readme: README.md

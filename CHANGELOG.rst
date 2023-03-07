@@ -13,7 +13,9 @@ Major Changes
 
 - Add Network INTERFACES role.
 
+
 Documentation Changes
 ---------------------
 
 - Add docs for Remediate and Detect action.
+- Fix collection name in galaxy.yaml.
