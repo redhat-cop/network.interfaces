@@ -1,7 +1,6 @@
 from __future__ import absolute_import, division, print_function
 
 
-
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -87,9 +86,9 @@ EXAMPLES = r"""
 # META: role_complete for 10.0.150.231
 # META: ran handlers
 # META: ran handlers
-# 
+#
 # PLAY RECAP *********************************************************************
-# 10.0.150.231               : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+# 10.0.150.231               : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 - name: Perform interfaces health checks with details as true
   hosts: iosxr
@@ -208,11 +207,11 @@ EXAMPLES = r"""
 #         "status": "successful"
 #     }
 # }
-# 
+#
 # PLAY RECAP ***********************************************************************************************************
-# 10.0.150.115               : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-# 
-# 
+# 10.0.150.115               : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+#
+#
 
 - name: Perform interfaces health checks with ignore_errors as false
   hosts: iosxr
@@ -238,7 +237,7 @@ EXAMPLES = r"""
                 ignore_errors: true
                 min_count: 1
 
-# 
+#
 # TASK [network.interfaces.run : INTERFACES health checks] *************************************************************
 # [WARNING]: Persistent connection logging is enabled for 10.0.150.115. This will log ALL interactions and WILL NOT
 # redact sensitive configuration like passwords. USE WITH CAUTION!
@@ -332,15 +331,15 @@ EXAMPLES = r"""
 #         "status": "unsuccessful"
 #     }
 # }
-# 
+#
 # PLAY RECAP ***********************************************************************************************************
-# 10.0.150.115               : ok=4    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+# 10.0.150.115               : ok=4    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
 
 """
 
 RETURN = """
   health_checks:
-    description:INTERFACES health checks
+    description: INTERFACES health checks
     type: dict
 
 """
@@ -370,7 +369,7 @@ def _process_health_facts(health_facts):
             "operational"
         ):
             interface_status_summary["up"] += 1
-        elif"down" in interface.get("operational") or "Down" in interface.get(
+        elif "down" in interface.get("operational") or "Down" in interface.get(
             "operational"
         ):
             interface_status_summary["down"] += 1
@@ -399,7 +398,7 @@ def health_check_view(*args, **kwargs):
         if h_vars:
             checks = h_vars.get("checks")
             details = h_vars.get("details")
-            for i in ["all_operational_state_up", "all_admin_state_up", "min_operational_state_up", "min_admin_state_up" ]:
+            for i in ["all_operational_state_up", "all_admin_state_up", "min_operational_state_up", "min_admin_state_up"]:
                 option, int_dict, status = process_stats(i, health_facts, checks)
                 health_checks.update({option: int_dict})
                 if status:
