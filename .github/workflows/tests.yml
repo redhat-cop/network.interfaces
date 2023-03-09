@@ -28,6 +28,6 @@ jobs:
       - run: >-
           python -c "assert set([
           '${{ needs.changelog.result }}',
-          '${{ needs.ansible-lint.result }}'
-          '${{ needs.sanity.result }}'
+          '${{ needs.ansible-lint.result }}',
+          '${{ needs.sanity.result }}',
           ]) == {'success'}"
