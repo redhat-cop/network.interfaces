@@ -401,7 +401,8 @@ def health_check_view(*args, **kwargs):
             details = h_vars.get("details")
             for i in ["all_operational_state_up", "all_admin_state_up", "min_operational_state_up", "min_admin_state_up" ]:
                 option, int_dict, status = process_stats(i, health_facts, checks)
-                health_checks.update({option: int_dict})
+                if int_dict:
+                  health_checks.update({option: int_dict})
                 if status:
                     health_checks.update({"status": status})
         else:
@@ -416,6 +417,7 @@ def health_check_view(*args, **kwargs):
 def process_stats(option, health_facts, checks):
     opr = is_present(checks, option)
     status = None
+    int_dict = {}
     if opr:
         if option == "all_admin_state_up":
             check_status = get_admin_status(health_facts, "admin_up")
