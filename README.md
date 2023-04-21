@@ -6,6 +6,25 @@ This repository contains the `network.interfaces` Ansible Collection.
 
 The `network.interfaces` enables user to manage the Interfaces resources independent of platforms and perform INTERFACES health checks.
 
+## Tested with Ansible
+
+Tested with ansible-core 2.13 releases.
+
+## Installation
+
+```
+ansible-galaxy collection install git+https://github.com/redhat-cop/network.interfaces
+```
+
+You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml` using the format:
+
+```yaml
+collections:
+- name: https://github.com/redhat-cop/network.interfaces.git
+  type: git
+  version: main
+```
+
 **Capabilities**
 - `Build Brownfield Inventory`: Users want to be able to get the facts for INTERFACES resources and store it as host_vars thus enabling the capability to get facts for all the hosts within the inventory and store facts in a structured format which acts as SOT.
 - `INTERFACES Resource Management`: Users want to be able to manage the interfaces,L2 interfaces and L3 interfaces configurations.This also includes the enablement of gathering facts, updating INTERFACE resource host-vars and deploying config onto the appliance.
