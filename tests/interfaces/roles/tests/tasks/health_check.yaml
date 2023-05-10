@@ -1,0 +1,56 @@
+---
+- name: Set a health facts for the expect health facts
+  ansible.builtin.set_fact:
+    health_facts:
+      interfaces_health:
+        interfaces:
+          GigabitEthernet0/0/0/0:
+            admin: up
+            name: GigabitEthernet0/0/0/0
+            operational: up,
+          GigabitEthernet0/0/0/1:
+            admin: up
+            name: GigabitEthernet0/0/0/1
+            operational: up,
+          GigabitEthernet0/0/0/2:
+            admin: up
+            name: GigabitEthernet0/0/0/2
+            operational: up,
+          Loopback888:
+            admin: up
+            name: Loopback888
+            operational: up,
+          Loopback999:
+            admin: up
+            name: Loopback999
+            operational: up,
+          MgmtEth0/RP0/CPU0/0:
+            admin: up
+            name: MgmtEth0/RP0/CPU0/0
+            operational: up,
+          Null0:
+            admin: up
+            name: Null0
+            operational: up,
+
+- name: Vars
+  ansible.builtin.set_fact:
+    health_check_items:
+      name: "health_check"
+      vars:
+        checks:
+          - name: min_admin_state_up
+            min_count: 2
+          - name: all_admin_state_up
+          - name: all_operational_state_up
+          - name: min_admin_state_up
+            min_count: 2
+
+- name: Set BGP health facts
+  ansible.builtin.set_fact:
+    health_checks: "{{ interface_health | ansible.utils.health_check_view(health_checks_items) }}"
+
+
+- name: Check for accurate facts
+  ansible.builtin.assert:
+    that: "{{ health_checks == expected_health_checks }}"

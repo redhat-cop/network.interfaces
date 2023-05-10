@@ -40,8 +40,8 @@ collections:
   
 - This role enables users to create a runtime brownfield inventory with all the INTERFACES configuration in terms of host vars. These host vars are ansible facts which have been gathered through the *_interfaces, *_l2_interfaces and *_l3_interfaces network resource module.The tasks offered by this role could be observed as below:
 
-### Perform INTERFACES Health Checks
-- Health Checks operation fetch the current status INTERFACES operation state health.
+## Perform INTERFACES Health Checks
+#### Health Checks operation fetch the current status INTERFACES operation state health.
 
 ```yaml
 health_checks.yml
@@ -54,6 +54,7 @@ health_checks.yml
     ansible.builtin.include_role:
       name: network.interfaces.run
     vars:
+      ansible_network_os: cisco.iosxr.iosxr
       actions:
         - name: health_check
           vars:
@@ -62,16 +63,15 @@ health_checks.yml
               - name: all_operational_state_up
               - name: min_operational_state_up
                 min_count: 1
-              - name: all_administratnal_state_up
-              - name: min_administratnal_state_up
+              - name: all_admin_state_up
+              - name: min_admin_state_up
                 min_count: 1
 ```
 
 
-### Building Brownfield Inventory with Persist
-- Persist operation fetch the interfaces,L2 interfaces and L3 interfaces facts and store them as host vars.
-- Result of successful Persist operation would be an Inventory directory having facts as host vars acting as SOT
-  for operations like deploy, etc.
+## Building Brownfield Inventory with Persist
+#### Persist operation fetch the interfaces,L2 interfaces and L3 interfaces facts and store them as host vars.
+##### Result of successful Persist operation would be interfaces facts and publish inventory host_vars to remote repository which will act as SOT for operations like deploy, remediate,detect etc.
 
 ```yaml
 - name: Persist the facts into host vars
@@ -82,13 +82,20 @@ health_checks.yml
     ansible.builtin.include_role:
       name: network.interfaces.run
     vars:
-      actions:
-        - name: persist
-          inventory_directory: './inventory'
+      action: persist
+      ansible_network_os: cisco.iosxr.iosxr
+      data_store:
+        scm:  
+          origin:
+            url: "{{ GH_REPO_URL }}"
+            token: "{{ GH_PAT }}"
+            user:
+              name: ansible_github
+              email: ansible@ansible.com
 ```
 
-#### Gather INTERFACES Facts
-- Gather operation gathers the running-confguration specific to interfaces, l2-interfaces, l3-interfaces resources.
+## Gather INTERFACES Facts
+#### Gather operation gathers the running-confguration specific to interfaces, l2-interfaces, l3-interfaces resources.
 
 ```yaml
 - name: Gather Facts
@@ -99,12 +106,13 @@ health_checks.yml
     ansible.builtin.include_role:
       name: network.interface.run
     vars:
+      ansible_network_os: cisco.iosxr.iosxr
       actions:
         - name: gather
 ```
 
-#### Deploy INTERFACES Configuration
-- Deploy operation will read the facts from the provided/default inventory and deploy the changes on to the appliances.
+## Deploy INTERFACES Configuration
+#### Read all host_vars from peristed local inventory and deploy changes to running-config.
 
 ```yaml
 - name: Deploy host vars facts
@@ -115,12 +123,39 @@ health_checks.yml
     include_role:
       name: network.interfaces.run
     vars:
+      ansible_network_os: cisco.iosxr.iosxr
       actions:
         - name: deploy
+      data_store:
+        local: "~/backup/network"
 ```
 
-#### Detect configuration drift in INTERFACES Configuration
-- Detect operation will read the facts from the provided/default inventory and detect if any configuration changes are there on the appliances using overridden state.
+#### Read provided resources host vars from remote repository and deploy changes to running-config.
+
+```yaml
+- name: Deploy host vars facts
+  hosts: iosxr
+  gather_facts: false
+  tasks:
+  - name: INTERFACES Manager
+    include_role:
+      name: network.interfaces.run
+    vars:
+      ansible_network_os: cisco.iosxr.iosxr
+      actions:
+        - name: deploy
+      data_store:
+        scm:  
+          origin:
+            url: "{{ GH_REPO_URL }}"
+            token: "{{ GH_PAT }}"
+            user:
+              name: github_username
+              email: youremail@example.com
+```
+
+## Detect configuration drift in INTERFACES Configuration
+#### Detect configuration drift between local host vars and running config. In this action 'overridden' state is used with 'check_mode=True'
 
 ```yaml
 - name: 
@@ -131,12 +166,14 @@ health_checks.yml
     include_role:
       name: network.interfaces.run
     vars:
+      ansible_network_os: cisco.iosxr.iosxr
       actions:
         - name: detect
+      data_store:
+        local: "~/backup/network"
 ```
 
-#### Remediate configuration drift in INTERFACES Configuration
-- Remediate operation will read the facts from the provided/default inventory and Remediate if any configuration changes are there on the appliances using overridden state.
+#### Detect configuration drift between remote host-vars repository and running config. In this action 'overridden' state is used with 'check_mode=True'
 
 ```yaml
 - name: 
@@ -147,8 +184,83 @@ health_checks.yml
     include_role:
       name: network.interfaces.run
     vars:
+      ansible_network_os: cisco.iosxr.iosxr
+      actions:
+        - name: detect
+      data_store:
+        scm:  
+          origin:
+            url: "{{ GH_REPO_URL }}"
+            token: "{{ GH_PAT }}"
+            user:
+              name: github_username
+              email: youremail@example.com
+```
+
+## Remediate configuration drift in INTERFACES Configuration
+#### Remediate configuration drift between local inventory host-vars and running config for given network resources.
+[CAUTION !] This action will override the running-config
+
+```yaml
+- name: 
+  hosts: iosxr
+  gather_facts: false
+  tasks:
+  - name: INTERFACES Manager
+    include_role:
+      name: network.interfaces.run
+    vars:
+      ansible_network_os: cisco.iosxr.iosxr
       actions:
         - name: remediate
+      data_store:
+          local: "~/backup/network"
+```
+
+#### Remediate configuration drift between remote inventory host-vars and running config for given network resources.
+[CAUTION !] This action will override the running-config
+
+```yaml
+- name: 
+  hosts: iosxr
+  gather_facts: false
+  tasks:
+  - name: INTERFACES Manager
+    include_role:
+      name: network.interfaces.run
+    vars:
+      ansible_network_os: cisco.iosxr.iosxr
+      actions:
+        - name: remediate
+      data_store:
+        scm:  
+          origin:
+            url: "{{ GH_REPO_URL }}"
+            token: "{{ GH_PAT }}"
+            user:
+              name: github_username
+              email: youremail@example.com
+```
+## Configure interface configuration with config action.
+#### invoke single operation for provided resource with provided configuration and state for given ansible_network_os
+
+```yaml
+- name: 
+  hosts: iosxr
+  gather_facts: false
+  tasks:
+  - name: INTERFACES Manager
+    include_role:
+      name: network.interfaces.run
+    vars:
+      ansible_network_os: cisco.iosxr.iosxr
+      vars:
+      action: configure
+      ansible_network_os: cisco.iosxr.iosxr
+      config:
+        - name: "GigabitEthernet0/0"
+          description: "Edited with Configure operation"
+      state: merged
 ```
 ### Code of Conduct
 This collection follows the Ansible project's
