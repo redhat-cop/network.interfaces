@@ -1,3 +1,3 @@
 ---
 bugfixes:
-    Fix issue in 'health_check' action.
+    - gFix issue in 'health_check' action.
