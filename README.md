@@ -71,7 +71,7 @@ health_checks.yml
 
 ## Building Brownfield Inventory with Persist
 #### Persist operation fetch the interfaces,L2 interfaces and L3 interfaces facts and store them as host vars.
-##### Result of successful Persist operation would be interfaces facts and publish inventory host_vars to remote repository which will act as SOT for operations like deploy, remediate,detect etc.
+#### Result of successful Persist operation would be interfaces facts and publish inventory host_vars to remote repository which will act as SOT for operations like deploy, remediate,detect etc.
 
 ```yaml
 - name: Persist the facts into host vars
