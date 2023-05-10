@@ -82,7 +82,7 @@ health_checks.yml
     ansible.builtin.include_role:
       name: network.interfaces.run
     vars:
-      ansible_network_os: cisco.ios.ios
+      ansible_network_os: cisco.iosxr.iosxr
       actions:
         - name: persist
       data_store:
