@@ -78,20 +78,21 @@ health_checks.yml
   hosts: iosxr
   gather_facts: false
   tasks:
-  - name: INTERFACES Manager
+  - name: Network Interfaces Manager
     ansible.builtin.include_role:
       name: network.interfaces.run
     vars:
-      action: persist
-      ansible_network_os: cisco.iosxr.iosxr
+      ansible_network_os: cisco.ios.ios
+      actions:
+        - name: persist
       data_store:
-        scm:  
-          origin:
-            url: "{{ GH_REPO_URL }}"
-            token: "{{ GH_PAT }}"
-            user:
-              name: ansible_github
-              email: ansible@ansible.com
+      scm:  
+        origin:
+          url: "{{ GH_REPO_URL }}"
+          token: "{{ GH_PAT }}"
+          user:
+            name: ansible_github
+            email: ansible@ansible.com
 ```
 
 ## Gather INTERFACES Facts
@@ -112,7 +113,7 @@ health_checks.yml
 ```
 
 ## Deploy INTERFACES Configuration
-#### Read all host_vars from peristed local inventory and deploy changes to running-config.
+#### Read all host_vars from persisted local inventory and deploy changes to running-config.
 
 ```yaml
 - name: Deploy host vars facts
