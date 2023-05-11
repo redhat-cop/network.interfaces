@@ -11,4 +11,5 @@ namespace: network
 readme: README.md
 repository: https://github.com/redhat-cop/network.interfaces
 issues: https://github.com/redhat-cop/network.interfaces/issues
-version: 1.0.0
+tags: [networking]
+version: 2.0.0
