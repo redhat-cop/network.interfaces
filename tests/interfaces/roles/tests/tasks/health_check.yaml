@@ -46,7 +46,7 @@
           - name: min_admin_state_up
             min_count: 2
 
-- name: Set BGP health facts
+- name: Set Interfaces health facts
   ansible.builtin.set_fact:
     health_checks: "{{ interface_health | ansible.utils.health_check_view(health_checks_items) }}"
 
