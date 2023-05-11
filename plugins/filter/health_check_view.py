@@ -401,7 +401,7 @@ def health_check_view(*args, **kwargs):
             for i in ["all_operational_state_up", "all_admin_state_up", "min_operational_state_up", "min_admin_state_up"]:
                 option, int_dict, status = process_stats(i, health_facts, checks)
                 if int_dict:
-                  health_checks.update({option: int_dict})
+                    health_checks.update({option: int_dict})
                 if status:
                     health_checks.update({"status": status})
         else:
