@@ -16,12 +16,12 @@ Major Changes
 Bugfixes
 --------
 
-- gFix issue in 'health_check' action.
+- Fix issue in 'health_check' action.
 
 Documentation Changes
 ---------------------
 
-- Update README with collection installtion commands.
+- Update README with collection installation commands.
 
 v1.0.0
 ======
