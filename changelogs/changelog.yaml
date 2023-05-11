@@ -12,3 +12,16 @@ releases:
     - add_network_interfaces.yaml
     - fix_collection_name.yaml
     release_date: '2023-03-07'
+  2.0.0:
+    changes:
+      bugfixes:
+      - gFix issue in 'health_check' action.
+      doc_changes:
+      - Update README with collection installtion commands.
+      major_changes:
+      - Enable scm based operations(https://github.com/redhat-cop/network.interfaces/issues/7)
+    fragments:
+    - enable_scm.yaml
+    - fix_6.yaml
+    - update_readme.yaml
+    release_date: '2023-05-11'
