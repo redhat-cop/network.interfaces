@@ -15,9 +15,9 @@ releases:
   2.0.0:
     changes:
       bugfixes:
-      - gFix issue in 'health_check' action.
+      - Fix issue in 'health_check' action.
       doc_changes:
-      - Update README with collection installtion commands.
+      - Update README with collection installation commands.
       major_changes:
       - Enable scm based operations(https://github.com/redhat-cop/network.interfaces/issues/7)
     fragments:
