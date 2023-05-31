@@ -1,0 +1,19 @@
+---
+network_interfaces_health_facts:
+  interfaces:
+    GigabitEthernet0/0/0/0:
+      admin: up
+      name: GigabitEthernet0/0/0/0
+      operational: up,
+    GigabitEthernet0/0/0/1:
+      admin: up
+      name: GigabitEthernet0/0/0/1
+      operational: up,
+network_interfaces_items:
+  name: "health_check"
+  vars:
+    checks:
+      - name: all_admin_state_up
+      - name: all_operational_state_up
+      - name: min_admin_state_up
+        min_count: 2
