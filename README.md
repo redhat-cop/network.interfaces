@@ -55,7 +55,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: health_check
           vars:
             details: True
@@ -83,7 +83,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: persist
       data_store:
       scm:  
@@ -108,7 +108,7 @@ health_checks.yml
       name: network.interface.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: gather
 ```
 
@@ -125,7 +125,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: deploy
       data_store:
         local: "~/backup/network"
@@ -143,7 +143,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: deploy
       data_store:
         scm:  
@@ -168,7 +168,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: detect
       data_store:
         local: "~/backup/network"
@@ -186,7 +186,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: detect
       data_store:
         scm:  
@@ -212,7 +212,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: remediate
       data_store:
           local: "~/backup/network"
@@ -231,7 +231,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: remediate
       data_store:
         scm:  
@@ -256,7 +256,7 @@ health_checks.yml
     vars:
       ansible_network_os: cisco.iosxr.iosxr
       vars:
-      action: configure
+      operation: configure
       ansible_network_os: cisco.iosxr.iosxr
       config:
         - name: "GigabitEthernet0/0"
