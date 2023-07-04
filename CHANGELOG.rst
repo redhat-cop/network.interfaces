@@ -5,6 +5,20 @@ Network Interfaces Collection Release Notes
 .. contents:: Topics
 
 
+v3.0.0
+======
+
+Major Changes
+-------------
+
+- Rename role variables to follow the role_name_var variable naming rule for roles.
+- Rename variable action as operation, on behalf of ansible-lint var-naming error for reserved Ansible keywords.
+
+Documentation Changes
+---------------------
+
+- Fix misspelled words in README, and fix examples.
+
 v2.0.0
 ======
 
