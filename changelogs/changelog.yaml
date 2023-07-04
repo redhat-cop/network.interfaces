@@ -36,4 +36,4 @@ releases:
         error for reserved Ansible keywords.
     fragments:
     - update_action_to_operation.yaml
-    release_date: '2023-07-03'
+    release_date: '2023-07-04'
