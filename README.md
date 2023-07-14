@@ -13,7 +13,7 @@ Tested with ansible-core 2.13 releases.
 ## Installation
 
 ```
-ansible-galaxy collection install git+https://github.com/redhat-cop/network.interfaces
+ansible-galaxy collection install network.interfaces
 ```
 
 You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml` using the format:
