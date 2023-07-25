@@ -37,3 +37,10 @@ releases:
     fragments:
     - update_action_to_operation.yaml
     release_date: '2023-07-04'
+  3.0.1:
+    changes:
+      doc_changes:
+      - Added installation steps to the documentation.
+    fragments:
+    - documentation_fix.yml
+    release_date: '2023-07-25'
