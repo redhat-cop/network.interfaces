@@ -172,7 +172,7 @@ health_checks.yml
 ```
 
 ## Detect configuration drift in INTERFACES Configuration
-#### Detect configuration drift between local host vars and running-config. In this action 'overridden' state is used with 'check_mode=True'
+#### Detect configuration drift between local host vars and running-config. In this operation 'overridden' state is used with 'check_mode=True'
 
 ```yaml
 - name:
@@ -190,7 +190,7 @@ health_checks.yml
         local: "~/backup/network"
 ```
 
-#### Detect configuration drift between remote host-vars repository and running-config. In this action 'overridden' state is used with 'check_mode=True'
+#### Detect configuration drift between remote host-vars repository and running-config. In this operation 'overridden' state is used with 'check_mode=True'
 
 ```yaml
 - name:
@@ -216,7 +216,7 @@ health_checks.yml
 
 ## Remediate configuration drift in INTERFACES Configuration
 #### Remediate configuration drift between local inventory host-vars and running config for given network resources.
-[CAUTION !] This action will override the running-config
+[CAUTION !] This operation will override the running-config
 
 ```yaml
 - name:
@@ -235,7 +235,7 @@ health_checks.yml
 ```
 
 #### Remediate configuration drift between remote inventory host-vars and running config for given network resources.
-[CAUTION !] This action will override the running-config
+[CAUTION !] This operation will override the running-config
 
 ```yaml
 - name:
@@ -258,7 +258,7 @@ health_checks.yml
               name: github_username
               email: youremail@example.com
 ```
-## Configure interface configuration with config action.
+## Configure interface configuration with config operation.
 #### invoke single operation for a provided resource with provided configuration and state for given ansible_network_os
 
 ```yaml
@@ -272,7 +272,7 @@ health_checks.yml
     vars:
       ansible_network_os: cisco.iosxr.iosxr
       vars:
-      action: configure
+      operation: configure
       ansible_network_os: cisco.iosxr.iosxr
       config:
         - name: "GigabitEthernet0/0"
