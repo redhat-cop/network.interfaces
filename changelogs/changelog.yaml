@@ -3,37 +3,39 @@ releases:
   1.0.0:
     changes:
       doc_changes:
-      - Add docs for Remediate and Detect action.
-      - Fix collection name in galaxy.yaml.
+        - Add docs for Remediate and Detect action.
+        - Fix collection name in galaxy.yaml.
       major_changes:
-      - Add Network INTERFACES role.
+        - Add Network INTERFACES role.
     fragments:
-    - add_docs.yaml
-    - add_network_interfaces.yaml
-    - fix_collection_name.yaml
-    release_date: '2023-03-07'
+      - add_docs.yaml
+      - add_network_interfaces.yaml
+      - fix_collection_name.yaml
+    release_date: "2023-03-07"
   2.0.0:
     changes:
       bugfixes:
-      - Fix issue in 'health_check' action.
+        - Fix issue in 'health_check' action.
       doc_changes:
-      - Update README with collection installation commands.
+        - Update README with collection installation commands.
       major_changes:
-      - Enable scm based operations(https://github.com/redhat-cop/network.interfaces/issues/7)
+        - Enable scm based operations(https://github.com/redhat-cop/network.interfaces/issues/7)
     fragments:
-    - enable_scm.yaml
-    - fix_6.yaml
-    - update_readme.yaml
-    release_date: '2023-05-11'
+      - enable_scm.yaml
+      - fix_6.yaml
+      - update_readme.yaml
+    release_date: "2023-05-11"
   3.0.0:
     changes:
       doc_changes:
-      - Fix misspelled words in README, and fix examples.
+        - Added installation steps to the documentation.
+        - Fix misspelled words in README, and fix examples.
       major_changes:
-      - Rename role variables to follow the role_name_var variable naming rule for
-        roles.
-      - Rename variable action as operation, on behalf of ansible-lint var-naming
-        error for reserved Ansible keywords.
+        - Rename role variables to follow the role_name_var variable naming rule for
+          roles.
+        - Rename variable action as operation, on behalf of ansible-lint var-naming
+          error for reserved Ansible keywords.
     fragments:
-    - update_action_to_operation.yaml
-    release_date: '2023-07-04'
+      - documentation_fix.yml
+      - update_action_to_operation.yaml
+    release_date: "2023-07-25"
