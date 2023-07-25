@@ -1,15 +1,15 @@
 ---
 authors:
-  - Ashwini Mhatre (amhatre)
+  - Ashwini Mhatre (@amhatre)
 dependencies:
-  "ansible.netcommon": ">=4.1.0"
-  "ansible.utils": ">=2.7.0"
+  ansible.netcommon: ">=5.0.0"
+  ansible.utils: ">=2.9.0"
 license_file: LICENSE
 name: interfaces
-description: Ansible Network INTERFACES enables user to manage the INTERFACES resources independent of platforms and perform INTERFACEShealth checks.
+description: Ansible Network Interfaces enables user to manage the Interfaces resources independent of platforms and perform Interfaces health checks.
 namespace: network
 readme: README.md
 repository: https://github.com/redhat-cop/network.interfaces
 issues: https://github.com/redhat-cop/network.interfaces/issues
 tags: [networking]
-version: 2.0.0
+version: 3.0.0

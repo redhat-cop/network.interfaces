@@ -4,7 +4,7 @@ This repository contains the `network.interfaces` Ansible Collection.
 
 ## Description
 
-The `network.interfaces` enables user to manage the Interfaces resources independent of platforms and perform INTERFACES health checks.
+The `network.interfaces` enable users to manage the resources Interfaces independent of platforms and perform INTERFACES health checks.
 
 ## Tested with Ansible
 
@@ -26,22 +26,22 @@ collections:
 ```
 
 **Capabilities**
-- `Build Brownfield Inventory`: Users want to be able to get the facts for INTERFACES resources and store it as host_vars thus enabling the capability to get facts for all the hosts within the inventory and store facts in a structured format which acts as SOT.
-- `INTERFACES Resource Management`: Users want to be able to manage the interfaces,L2 interfaces and L3 interfaces configurations.This also includes the enablement of gathering facts, updating INTERFACE resource host-vars and deploying config onto the appliance.
-- `INTERFACES Health Checks`: Users want to be able to perform health checks for INTERFACES resource.These health checks should be able to provide the interfaces admin operational state with necessary details.
+- `Build Brownfield Inventory`: Users want to be able to get the facts for INTERFACES resources and store it as host_vars thus enabling the capability to get facts for all the hosts within the inventory and store facts in a structured format that acts as SOT.
+- `INTERFACES Resource Management`: Users want to be able to manage the interfaces, L2 interfaces and L3 interfaces configurations. This also includes the enablement of gathering facts, updating INTERFACE resource host-vars and deploying config onto the appliance.
+- `INTERFACES Health Checks`: Users want to be able to perform health checks for INTERFACES resources. These health checks should be able to provide the interface's admin operational state with the necessary details.
 
 ### Usage
-- This platform agnostic role enables the user to perform INTERFACES health checks.Users can perform following health checks:
+- This platform-agnostic role enables the user to perform INTERFACES health checks. Users can perform the following health checks:
        `all_operational_state_up`
        `min_operational_state_up`
        `all_administratnal_state_up`
        `min_administratnal_state_up`
-      
-  
-- This role enables users to create a runtime brownfield inventory with all the INTERFACES configuration in terms of host vars. These host vars are ansible facts which have been gathered through the *_interfaces, *_l2_interfaces and *_l3_interfaces network resource module.The tasks offered by this role could be observed as below:
+
+
+- This role enables users to create a runtime brownfield inventory with all the INTERFACES configurations in terms of host vars. These host vars are ansible facts that have been gathered through the *_interfaces, *_l2_interfaces and *_l3_interfaces network resource module. The tasks offered by this role could be observed  below:
 
 ## Perform INTERFACES Health Checks
-#### Health Checks operation fetch the current status INTERFACES operation state health.
+#### Health Checks operation fetches the current status of INTERFACES operation state health.
 
 ```yaml
 health_checks.yml
@@ -55,7 +55,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      operations:
+      actions:
         - name: health_check
           vars:
             details: True
@@ -70,8 +70,8 @@ health_checks.yml
 
 
 ## Building Brownfield Inventory with Persist
-#### Persist operation fetch the interfaces,L2 interfaces and L3 interfaces facts and store them as host vars.
-#### Result of successful Persist operation would be interfaces facts and publish inventory host_vars to remote repository which will act as SOT for operations like deploy, remediate,detect etc.
+#### Persist operation fetches the interfaces, L2 interfaces and L3 interfaces facts and stores them as host vars.
+#### The result of a successful persist operation would be to interface facts and publish inventory host_vars to a remote repository which will act as SOT for operations like deploy, remediate, detect etc.
 
 ```yaml
 - name: Persist the facts into host vars
@@ -83,10 +83,10 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      operations:
+      actions:
         - name: persist
       data_store:
-      scm:  
+      scm:
         origin:
           url: "{{ GH_REPO_URL }}"
           token: "{{ GH_PAT }}"
@@ -96,7 +96,7 @@ health_checks.yml
 ```
 
 ## Gather INTERFACES Facts
-#### Gather operation gathers the running-confguration specific to interfaces, l2-interfaces, l3-interfaces resources.
+#### Gather operation gathers the running-config specific to interfaces, l2-interfaces and, l3-interfaces resources.
 
 ```yaml
 - name: Gather Facts
@@ -108,7 +108,7 @@ health_checks.yml
       name: network.interface.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      operations:
+      actions:
         - name: gather
 ```
 
@@ -125,13 +125,13 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      operations:
+      actions:
         - name: deploy
       data_store:
         local: "~/backup/network"
 ```
 
-#### Read provided resources host vars from remote repository and deploy changes to running-config.
+#### Read provided resources host vars from a remote repository and deploy changes to running-config.
 
 ```yaml
 - name: Deploy host vars facts
@@ -143,10 +143,10 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      operations:
+      actions:
         - name: deploy
       data_store:
-        scm:  
+        scm:
           origin:
             url: "{{ GH_REPO_URL }}"
             token: "{{ GH_PAT }}"
@@ -156,10 +156,10 @@ health_checks.yml
 ```
 
 ## Detect configuration drift in INTERFACES Configuration
-#### Detect configuration drift between local host vars and running config. In this action 'overridden' state is used with 'check_mode=True'
+#### Detect configuration drift between local host vars and running-config. In this action 'overridden' state is used with 'check_mode=True'
 
 ```yaml
-- name: 
+- name:
   hosts: iosxr
   gather_facts: false
   tasks:
@@ -168,16 +168,16 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      operations:
+      actions:
         - name: detect
       data_store:
         local: "~/backup/network"
 ```
 
-#### Detect configuration drift between remote host-vars repository and running config. In this action 'overridden' state is used with 'check_mode=True'
+#### Detect configuration drift between remote host-vars repository and running-config. In this action 'overridden' state is used with 'check_mode=True'
 
 ```yaml
-- name: 
+- name:
   hosts: iosxr
   gather_facts: false
   tasks:
@@ -186,10 +186,10 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      operations:
+      actions:
         - name: detect
       data_store:
-        scm:  
+        scm:
           origin:
             url: "{{ GH_REPO_URL }}"
             token: "{{ GH_PAT }}"
@@ -203,7 +203,7 @@ health_checks.yml
 [CAUTION !] This action will override the running-config
 
 ```yaml
-- name: 
+- name:
   hosts: iosxr
   gather_facts: false
   tasks:
@@ -212,7 +212,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      operations:
+      actions:
         - name: remediate
       data_store:
           local: "~/backup/network"
@@ -222,7 +222,7 @@ health_checks.yml
 [CAUTION !] This action will override the running-config
 
 ```yaml
-- name: 
+- name:
   hosts: iosxr
   gather_facts: false
   tasks:
@@ -231,10 +231,10 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      operations:
+      actions:
         - name: remediate
       data_store:
-        scm:  
+        scm:
           origin:
             url: "{{ GH_REPO_URL }}"
             token: "{{ GH_PAT }}"
@@ -243,10 +243,10 @@ health_checks.yml
               email: youremail@example.com
 ```
 ## Configure interface configuration with config action.
-#### invoke single operation for provided resource with provided configuration and state for given ansible_network_os
+#### invoke single operation for a provided resource with provided configuration and state for given ansible_network_os
 
 ```yaml
-- name: 
+- name:
   hosts: iosxr
   gather_facts: false
   tasks:
@@ -256,7 +256,7 @@ health_checks.yml
     vars:
       ansible_network_os: cisco.iosxr.iosxr
       vars:
-      operation: configure
+      action: configure
       ansible_network_os: cisco.iosxr.iosxr
       config:
         - name: "GigabitEthernet0/0"
