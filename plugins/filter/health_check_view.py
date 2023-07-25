@@ -25,7 +25,7 @@ EXAMPLES = r"""
     ansible.builtin.include_role:
       name: network.interfaces.run
     vars:
-      actions:
+      operations:
         - name: health_check
           vars:
             details: False
@@ -98,7 +98,7 @@ EXAMPLES = r"""
     ansible.builtin.include_role:
       name: network.interfaces.run
     vars:
-      actions:
+      operations:
         - name: health_check
           vars:
             details: true
@@ -115,7 +115,7 @@ EXAMPLES = r"""
                 min_count: 1
 
 # TASK [network.interfaces.run : INTERFACES health checks] *************************************************************
-# [WARNING]: Persistent connection logging is enabled for 10.0.150.115. This will log ALL interactions and WILL NOT
+# [WARNING]: Persistent connection logging is enabled for 10.0.150.115. This will log ALL interoperations and WILL NOT
 # redact sensitive configuration like passwords. USE WITH CAUTION!
 # ok: [10.0.150.115] => {
 #     "failed_when_result": false,
@@ -221,7 +221,7 @@ EXAMPLES = r"""
     ansible.builtin.include_role:
       name: network.interfaces.run
     vars:
-      actions:
+      operations:
         - name: health_check
           vars:
             details: true
@@ -239,7 +239,7 @@ EXAMPLES = r"""
 
 #
 # TASK [network.interfaces.run : INTERFACES health checks] *************************************************************
-# [WARNING]: Persistent connection logging is enabled for 10.0.150.115. This will log ALL interactions and WILL NOT
+# [WARNING]: Persistent connection logging is enabled for 10.0.150.115. This will log ALL interoperations and WILL NOT
 # redact sensitive configuration like passwords. USE WITH CAUTION!
 # fatal: [10.0.150.115]: FAILED! => {
 #     "failed_when_result": true,
