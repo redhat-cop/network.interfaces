@@ -5,6 +5,14 @@ Network Interfaces Collection Release Notes
 .. contents:: Topics
 
 
+v3.0.1
+======
+
+Documentation Changes
+---------------------
+
+- Added installation steps to the documentation.
+
 v3.0.0
 ======
 
