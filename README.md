@@ -1,5 +1,5 @@
 # Network Interfaces Validated Content
-[![Test collection](https://github.com/redhat-cop/network.interfaces/operations/workflows/tests.yml/badge.svg)](https://github.com/redhat-cop/network.interfaces/operations/workflows/tests.yml)[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7650/badge)](https://bestpractices.coreinfrastructure.org/projects/7650)
+[![Test collection](https://github.com/redhat-cop/network.interfaces/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/redhat-cop/network.interfaces/actions/workflows/tests.yml)[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7650/badge)](https://bestpractices.coreinfrastructure.org/projects/7650)
 
 This repository contains the `network.interfaces` Ansible Collection.
 
