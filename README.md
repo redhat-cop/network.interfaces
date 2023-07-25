@@ -1,5 +1,5 @@
 # Network Interfaces Validated Content
-[![Test collection](https://github.com/redhat-cop/network.interfaces/actions/workflows/tests.yml/badge.svg)](https://github.com/redhat-cop/network.interfaces/actions/workflows/tests.yml)[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7650/badge)](https://bestpractices.coreinfrastructure.org/projects/7650)
+[![Test collection](https://github.com/redhat-cop/network.interfaces/operations/workflows/tests.yml/badge.svg)](https://github.com/redhat-cop/network.interfaces/operations/workflows/tests.yml)[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7650/badge)](https://bestpractices.coreinfrastructure.org/projects/7650)
 
 This repository contains the `network.interfaces` Ansible Collection.
 
@@ -77,7 +77,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: health_check
           vars:
             details: True
@@ -105,7 +105,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: persist
       data_store:
       scm:
@@ -130,7 +130,7 @@ health_checks.yml
       name: network.interface.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: gather
 ```
 
@@ -147,7 +147,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: deploy
       data_store:
         local: "~/backup/network"
@@ -165,7 +165,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: deploy
       data_store:
         scm:
@@ -190,7 +190,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: detect
       data_store:
         local: "~/backup/network"
@@ -208,7 +208,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: detect
       data_store:
         scm:
@@ -234,7 +234,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: remediate
       data_store:
           local: "~/backup/network"
@@ -253,7 +253,7 @@ health_checks.yml
       name: network.interfaces.run
     vars:
       ansible_network_os: cisco.iosxr.iosxr
-      actions:
+      operations:
         - name: remediate
       data_store:
         scm:
