@@ -17,7 +17,6 @@ Major Changes
 Documentation Changes
 ---------------------
 
-- Added installation steps to the documentation.
 - Fix misspelled words in README, and fix examples.
 
 v2.0.0
