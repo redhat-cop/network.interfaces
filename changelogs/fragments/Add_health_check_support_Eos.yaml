@@ -1,0 +1,3 @@
+---
+Bugfixes:
+  - Add health_check support for EOS platform(https://github.com/redhat-cop/network.interfaces/issues/19).
