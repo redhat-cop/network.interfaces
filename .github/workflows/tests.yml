@@ -96,7 +96,7 @@ jobs:
       - sanity
     runs-on: ubuntu-latest
     steps:
-
+      - run: >-
           python -c "assert 'failure' not in
           set([
           '${{ needs.ansible-lint.result }}',
