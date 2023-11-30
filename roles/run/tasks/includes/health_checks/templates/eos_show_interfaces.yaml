@@ -1,0 +1,17 @@
+[
+      {
+      "name": "interface_name",
+      "getval": '''(?P<name>\S+) is (administratively )?(?P<admin_state>\S+), line protocol is (?P<oper_state>\S+) ''',
+      "result": {
+        "interfaces": {
+            "{{ name }}":
+              {
+                "name": "{{ name }}",
+                "operational": "{{oper_state }}",
+                "admin": "{{admin_state}}"
+              }
+              }
+
+        }
+    }
+]
