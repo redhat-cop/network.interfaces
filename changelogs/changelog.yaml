@@ -39,7 +39,7 @@ releases:
     - documentation_fix.yml
     - update_action_to_operation.yaml
     release_date: '2023-07-26'
-  3.1.0:
+  3.0.1:
     changes:
       bugfixes:
       - Add health_check support for EOS platform(https://github.com/redhat-cop/network.interfaces/issues/19).

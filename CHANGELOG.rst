@@ -5,7 +5,7 @@ Network Interfaces Collection Release Notes
 .. contents:: Topics
 
 
-v3.1.0
+v3.0.1
 ======
 
 Bugfixes
