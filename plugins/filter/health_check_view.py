@@ -21,21 +21,21 @@ EXAMPLES = r"""
   hosts: iosxr
   gather_facts: false
   tasks:
-  - name: INTERFACES Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      operations:
-        - name: health_check
-          vars:
-            details: False
-            checks:
-              - name: all_operational_state_up
-              - name: min_operational_state_up
-                min_count: 1
-              - name: all_admin_state_up
-              - name: min_admin_state_up
-                min_count: 1
+    - name: INTERFACES Manager
+      ansible.builtin.include_role:
+        name: network.interfaces.run
+      vars:
+        operations:
+          - name: health_check
+            vars:
+              details: false
+              checks:
+                - name: all_operational_state_up
+                - name: min_operational_state_up
+                  min_count: 1
+                - name: all_admin_state_up
+                - name: min_admin_state_up
+                  min_count: 1
 
 # TASK [network.interfaces.run : INTERFACES health checks] ***********************
 # task path: /Users/amhatre/ansible-collections/collections/ansible_collections/network/interfaces/roles/run/tasks/includes/health_check.yaml:10
@@ -94,25 +94,25 @@ EXAMPLES = r"""
   hosts: iosxr
   gather_facts: false
   tasks:
-  - name: INTERFACES Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      operations:
-        - name: health_check
-          vars:
-            details: true
-            checks:
-              - name: all_operational_state_up
-                ignore_errors: true
-              - name: min_operational_state_up
-                min_count: 1
-                ignore_errors: true
-              - name: all_admin_state_up
-                ignore_errors: true
-              - name: min_admin_state_up
-                ignore_errors: true
-                min_count: 1
+    - name: INTERFACES Manager
+      ansible.builtin.include_role:
+        name: network.interfaces.run
+      vars:
+        operations:
+          - name: health_check
+            vars:
+              details: true
+              checks:
+                - name: all_operational_state_up
+                  ignore_errors: true
+                - name: min_operational_state_up
+                  min_count: 1
+                  ignore_errors: true
+                - name: all_admin_state_up
+                  ignore_errors: true
+                - name: min_admin_state_up
+                  ignore_errors: true
+                  min_count: 1
 
 # TASK [network.interfaces.run : INTERFACES health checks] *************************************************************
 # ok: [10.0.150.115] => {
@@ -215,26 +215,25 @@ EXAMPLES = r"""
   hosts: iosxr
   gather_facts: false
   tasks:
-  - name: INTERFACES Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      operations:
-        - name: health_check
-          vars:
-            details: true
-            checks:
-              - name: all_operational_state_up
-                ignore_errors: false
-              - name: min_operational_state_up
-                min_count: 1
-                ignore_errors: true
-              - name: all_admin_state_up
-                ignore_errors: true
-              - name: min_admin_state_up
-                ignore_errors: true
-                min_count: 1
-
+    - name: INTERFACES Manager
+      ansible.builtin.include_role:
+        name: network.interfaces.run
+      vars:
+        operations:
+          - name: health_check
+            vars:
+              details: true
+              checks:
+                - name: all_operational_state_up
+                  ignore_errors: false
+                - name: min_operational_state_up
+                  min_count: 1
+                  ignore_errors: true
+                - name: all_admin_state_up
+                  ignore_errors: true
+                - name: min_admin_state_up
+                  ignore_errors: true
+                  min_count: 1
 #
 # TASK [network.interfaces.run : INTERFACES health checks] *************************************************************
 # fatal: [10.0.150.115]: FAILED! => {
@@ -330,7 +329,6 @@ EXAMPLES = r"""
 #
 # PLAY RECAP ***********************************************************************************************************
 # 10.0.150.115               : ok=4    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
-
 """
 
 RETURN = """
