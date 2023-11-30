@@ -5,6 +5,14 @@ Network Interfaces Collection Release Notes
 .. contents:: Topics
 
 
+v3.1.0
+======
+
+Bugfixes
+--------
+
+- Add health_check support for EOS platform(https://github.com/redhat-cop/network.interfaces/issues/19).
+
 v3.0.0
 ======
 
