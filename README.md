@@ -9,7 +9,7 @@ The `network.interfaces` enable users to manage the resources Interfaces indepen
 
 ## Tested with Ansible
 
-Tested with ansible-core 2.13 releases.
+Tested with ansible-core 2.14 releases.
 
 ## Installation
 To consume this Validated Content from Automation Hub, the following needs to be added to `ansible.cfg`:
