@@ -4,6 +4,7 @@ authors:
 dependencies:
   ansible.netcommon: ">=6.0.0"
   ansible.utils: ">=3.0.0"
+  ansible.scm: ">=2.0.0"
 license_file: LICENSE
 name: interfaces
 description: Ansible Network Interfaces enables user to manage the Interfaces resources independent of platforms and perform Interfaces health checks.
