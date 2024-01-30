@@ -288,12 +288,12 @@ health_checks.yml
             user:
               name: "{{ ansible_github }}"
               email: "{{ your_email@example.com }}"
-
+```
 ## Testing
 
 The project uses tox to run `ansible-lint` and `ansible-test sanity`.
 Assuming this repository is checked out in the proper structure,
-e.g. `collections_root/ansible_collections/network/backup`, run:
+e.g. `collections_root/ansible_collections/network/interfaces`, run:
 
 ```shell
   tox -e ansible-lint
@@ -340,7 +340,7 @@ Please read and familiarize yourself with this document.
 
 ## Release notes
 
-Release notes are available [here](https://github.com/redhat-cop/network.backup/blob/main/CHANGELOG.rst).
+Release notes are available [here](https://github.com/redhat-cop/network.interfaces/blob/main/CHANGELOG.rst).
 
 ## Related information
 
