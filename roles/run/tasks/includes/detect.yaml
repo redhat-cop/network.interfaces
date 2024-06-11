@@ -3,7 +3,7 @@
   ansible.builtin.include_role:
     name: network.base.resource_manager
   vars:
-    operations: "detect"
+    operation: "detect"
     resources:
       - "interfaces"
       - "l2_interfaces"
