@@ -1,5 +1,5 @@
 ---
-name: Release
+name: "Release collection"
 
 on:   # yamllint disable-line rule:truthy
   release:
@@ -7,8 +7,8 @@ on:   # yamllint disable-line rule:truthy
 
 jobs:
   release_automation_hub:
-    uses: ansible/devtools/.github/workflows/release_ah.yml@main
+    uses: ansible/ansible-content-actions/.github/workflows/release.yaml@main
     with:
-      environment: ah
+      environment: release
     secrets:
       ah_token: ${{ secrets.AH_TOKEN }}
