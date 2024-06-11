@@ -1,6 +1,2 @@
 ---
 profile: production
-exclude_paths:
-  - changelogs/changelog.yaml
-skip_list:
-  - var-naming[no-role-prefix]
