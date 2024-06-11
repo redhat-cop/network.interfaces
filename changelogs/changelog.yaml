@@ -58,3 +58,17 @@ releases:
     - trivial_lint.yaml
     - update_required_ansible.yaml
     release_date: '2023-12-01'
+  5.0.0:
+    changes:
+      doc_changes:
+      - Update readme as per the common template.
+      major_changes:
+      - Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions
+        are EoL now.
+      release_summary: 'With this release, the minimum required version of `ansible-core`
+        for this collection is `2.15.0`. The last version known to be compatible with
+        `ansible-core` versions below `2.15` is v4.0.0.'
+    fragments:
+    - bump_215.yaml
+    - update_readme.yaml
+    release_date: '2024-06-11'
