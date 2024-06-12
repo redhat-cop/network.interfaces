@@ -3,9 +3,9 @@
   ansible.builtin.include_role:
     name: network.base.resource_manager
   vars:
-    operation: 'configure'
+    operation: "configure"
     config:
-      - 'interfaces'
-      - 'l2_interfaces'
-      - 'l3_interfaces'
+      - "interfaces"
+      - "l2_interfaces"
+      - "l3_interfaces"
     state:

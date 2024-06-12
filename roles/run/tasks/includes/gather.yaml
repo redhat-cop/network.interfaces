@@ -3,8 +3,8 @@
   ansible.builtin.include_role:
     name: network.base.resource_manager
   vars:
-    operation: 'gather'
+    operation: "gather"
     resources:
-      - 'interfaces'
-      - 'l2_interfaces'
-      - 'l3_interfaces'
+      - "interfaces"
+      - "l2_interfaces"
+      - "l3_interfaces"
