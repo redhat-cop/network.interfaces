@@ -387,6 +387,7 @@ def health_check_view(*args, **kwargs):
         health_facts = _process_health_facts(health_facts["interfaces"])
 
     health_checks = {}
+    details = None
     if target["name"] == "health_check":
         h_vars = target.get("vars")
         if h_vars:
