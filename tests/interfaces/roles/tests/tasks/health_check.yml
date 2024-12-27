@@ -1,0 +1,32 @@
+---
+- name: Set a health facts for the expected health facts
+  ansible.builtin.set_fact:
+    tests_expected_health_checks:
+      interfaces:
+        GigabitEthernet0/0/0/0:
+          admin: up
+          name: GigabitEthernet0/0/0/0
+          operational: up
+        GigabitEthernet0/0/0/1:
+          admin: up
+          name: GigabitEthernet0/0/0/1
+          operational: up
+
+- name: Vars
+  ansible.builtin.set_fact:
+    tests_item:
+      name: "health_check"
+      vars:
+        checks:
+          - name: all_admin_state_up
+          - name: all_operational_state_up
+          - name: min_admin_state_up
+            min_count: 2
+
+- name: Set Interfaces health facts
+  ansible.builtin.set_fact:
+    tests_health_checks: "{{ interfaces_health | ansible.utils.health_check_view(tests_item) }}"
+
+- name: Check for accurate facts
+  ansible.builtin.assert:
+    that: "{{ tests_health_checks == tests_expected_health_checks }}"

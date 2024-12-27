@@ -1,0 +1,10 @@
+---
+- name: Invoke persist function
+  ansible.builtin.include_role:
+    name: network.base.persist
+  vars:
+    resources:
+      - "interfaces"
+      - "l2_interfaces"
+      - "l3_interfaces"
+    ignore_empty: "{{ persist_empty | default(true) }}"

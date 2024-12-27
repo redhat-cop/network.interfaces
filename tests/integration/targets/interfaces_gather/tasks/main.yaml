@@ -1,0 +1,26 @@
+---
+- name: Debug
+  ansible.builtin.debug:
+    msg: "START network.interfaces gather role integration tests on connection={{ ansible_connection }}"
+
+- name: Gather and assertion
+  block:
+    - name: Run gather role to retrieve structured facts
+      ansible.builtin.include_role:
+        name: network.interfaces.gather
+      vars:
+        resources:
+          - "interfaces"
+          - "l2_interfaces"
+          - "l3_interfaces"
+      register: interfaces_result
+
+    - name: Assert that gather result
+      ansible.builtin.assert:
+        that:
+          - interfaces_result is defined
+          - interfaces_result.changed == false
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "END network.interfaces gather role integration tests on connection={{ ansible_connection }}"

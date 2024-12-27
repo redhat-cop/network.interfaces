@@ -1,0 +1,9 @@
+---
+- name: Invoke remediate function
+  ansible.builtin.include_role:
+    name: network.base.remediate
+  vars:
+    resources:
+      - "interfaces"
+      - "l2_interfaces"
+      - "l3_interfaces"
