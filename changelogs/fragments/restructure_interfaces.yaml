@@ -1,0 +1,23 @@
+---
+major_changes:
+  - summary: "Restructured the network.interfaces collection by converting supported operations into separate roles."
+    details: |
+      The following changes were made to the `network.interfaces` collection:
+      - Converted operations like `persist`, `detect`, `remediate`, `deploy` and `health_checks` into individual roles for better modularity and clarity.
+      - Each role (`persist`, `detect`, `remediate`, `deploy`, `gather`, `health_checks`) now has its own README.md and integration tests.
+      - Added integration tests to align with the new role-based structure.
+      - Improved documentation and usage examples for each role to reflect the restructuring.
+    issues:
+      - id: "ANA-500"
+        type: "feature"
+        link: "https://issues.redhat.com/browse/ANA-500"
+    impact:
+      - "Developers need to update their playbooks to use roles instead of operations."
+      - "Test cases and pipelines relying on operations must be updated to reference the new roles."
+    role_changes:
+      - persist: "Now an independent role for saving network facts to local or remote data stores."
+      - detect: "Now an independent role for identifying configuration drifts."
+      - remediate: "Now an independent role for fixing configuration drifts by applying saved configurations."
+      - deploy: "Now an independent role for deploying configurations based on inventory host_vars."
+      - gather: "New role to collect and display structured facts for network resources."
+      - health_checks: "New role to perform health checks on network devices."

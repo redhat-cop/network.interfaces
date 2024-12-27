@@ -9,9 +9,34 @@ This repository contains the `network.interfaces` Ansible Collection.
 
 - Ansible Network interfaces Collection contains the role that provides a platform-agnostic way of
   managing interfaces protocol/resources. This collection provides the user the capabilities to gather,
-  deploy, remediate, configure and perform health checks for network interfaces resources. 
+  deploy, remediate, detect, persist and perform health checks for network interfaces resources.
 
 - Network interfaces collection can be used by anyone who is looking to manage and maintain interfaces protocol/resources. This includes system administrators and IT professionals.
+
+This collection includes the following roles:
+- **`deploy`**: Ensure consistent configuration deployment across network devices.
+- **`detect`**: Identify configuration drifts between desired and actual states.
+- **`remediate`**: Automatically correct configuration drifts and restore compliance.
+- **`gather`**: Collect facts and running configurations from network devices.
+- **`persist`**: Save network device configurations and facts to local or remote repositories for backup or audit
+purposes.
+- **`health_checks`**: Enables to perform health checks for interfaces.
+
+## Included content
+
+Click on the name of a role to view its documentation:
+
+<!--start collection content-->
+### Roles
+Name | Description
+--- | ---
+[network.interfaces.deploy](roles/deploy/README.md) | Deploy consistent network configurations.
+[network.interfaces.detect](roles/detect/README.md) | Identify configuration drifts and discrepancies.
+[network.interfaces.remediate](roles/remediate/README.md) | Correct configuration drifts and restore compliance.
+[network.interfaces.gather](roles/gather/README.md) | Collect facts and running configurations from network devices.
+[network.interfaces.persist](roles/persist/README.md) | Save configurations and facts to local or remote repositories.
+[network.interfaces.health_checks](roles/health_checks/README.md) | Perform health checks for the interfaces.
+<!--end collection content-->
 
 ## Requirements
 - [Requires Ansible](https://github.com/redhat-cop/network.interfaces/blob/main/meta/runtime.yml)
@@ -49,7 +74,7 @@ ansible-galaxy collection install network.interfaces
 
 `Build Brownfield Inventory`:
 - Users want to be able to get the facts for INTERFACES resources and store it as host_vars thus enabling the capability to get facts for all the hosts within the inventory and store facts in a structured format that acts as SOT.
-  
+
 `interfaces Resource Management`:
 - Users want to be able to manage the interfaces, L2 interfaces and L3 interfaces configurations. This also includes the enablement of gathering facts, updating INTERFACE resource host-vars and deploying config onto the appliance.
 
@@ -62,233 +87,7 @@ ansible-galaxy collection install network.interfaces
        `min_operational_state_up`
        `all_administratnal_state_up`
        `min_administratnal_state_up`
-  
-This role enables users to create a runtime brownfield inventory with all the INTERFACES configurations in terms of host vars. These host vars are ansible facts that have been gathered through the *_interfaces, *_l2_interfaces and *_l3_interfaces network resource module. The tasks offered by this role could be observed  below:
 
-### Perform interfaces Health Checks
-- Health Checks operation fetches the current status of INTERFACES operation state health.
-
-```yaml
-health_checks.yml
----
-- name: Perform interfaces health checks
-  hosts: iosxr
-  gather_facts: false
-  tasks:
-  - name: INTERFACES Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.iosxr.iosxr
-      operations:
-        - name: health_check
-          vars:
-            details: True
-            checks:
-              - name: all_operational_state_up
-              - name: min_operational_state_up
-                min_count: 1
-              - name: all_admin_state_up
-              - name: min_admin_state_up
-                min_count: 1
-```
-
-
-### Building Brownfield Inventory with Persist
-- Persist operation fetches the interfaces, L2 interfaces and L3 interfaces facts and stores them as host vars.
-- The result of a successful Persist operation would be host_vars having YAML formatted resource facts.
-- These host_vars could exist locally or even be published to a remote repository acting as SOT for operations like deploy, remediate, detect, etc.
-
-#### fetch interfaces resource facts and build local data_store.
-```yaml
-- name: Persist the facts into host vars
-  hosts: rtr1
-  gather_facts: false
-  tasks:
-  - name: Network interfaces Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.ios.ios
-      operations:
-        - name: persist
-      data_store:
-        local: "~/interfaces/network"
-```
-
-#### fetch interfaces resource facts and publish persisted host_vars inventory to GitHub repository.
-```yaml
-- name: Persist the facts into remote data_store which is a GitHub repository
-  hosts: rtr1
-  gather_facts: false
-  tasks:
-  - name: Network interfaces Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.ios.ios
-      operations:
-        - name: persist
-      persist_empty: false
-      data_store:
-        scm:
-          origin:
-            url: "{{ your_github_repo }}"
-            token: "{{ github_access_token }}"
-            user:
-              name: "{{ ansible_github }}"
-              email: "{{ your_email@example.com }}"
-```
-
-### Display Structured Data with Gather
-- gather operation gathers the running configuration specific to interfaces, l2-interfaces and, l3-interfaces resources. resources
-  and displays these facts in YAML formatted structures.
-
-```yaml
-- name: Display interfaces resources in a structured format
-  hosts: rtr1
-  gather_facts: false
-  tasks:
-  - name: interfaces Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.ios.ios
-      operations:
-        - name: gather
-```
-
-### Deploy interfaces Configuration
-- Deploy operation will read the facts from the provided/default or remote inventory and deploy the changes onto the appliances.
-
-#### read host_vars from local data_store and deploy onto the field.
-```yaml
-- name: Deploy changes
-  hosts: rtr1
-  gather_facts: false
-  tasks:
-  - name: Network interfaces Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.ios.ios
-      operations:
-        - name: deploy
-      data_store:
-        local: "~/interfaces/network"
-```
-
-#### retrieve host_cars from the GitHub repository and deploy changes onto the field.
-```yaml
-- name: retrieve config from GitHub repo and deploy changes
-  hosts: rtr1
-  gather_facts: false
-  tasks:
-  - name: Network interfaces Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.ios.ios
-      operations:
-        - name: deploy
-      persist_empty: false
-      data_store:
-        scm:
-          origin:
-            url: "{{ your_github_repo }}"
-            token: "{{ github_access_token }}"
-            user:
-              name: "{{ ansible_github }}"
-              email: "{{ your_email@example.com }}"
-```
-
-### Detect configuration drift in interfaces Configuration
-- Detect operation will read the facts from the local provided/default inventory and detect if any configuration diff exists w.r.t running-config.
-
-#### detect the config difference between host_vars in local data_store and running-config.
-
-```yaml
-- name: Configuration drift detection
-  hosts: rtr1
-  gather_facts: false
-  tasks:
-  - name: Network interfaces Manager
-    ansible.builtin.include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.ios.ios
-      operations:
-        - name: detect
-      data_store:
-        local: "~/interfaces/network"
-```
-
-- Detect operation will read the facts from the GitHub repository inventory and detect if any configuration diff exists w.r.t running-config.
-
-#### detect the config difference between host_vars in local data_store and running-config.
-```yaml
-- name: Configuration drift detection
-  hosts: rtr1
-  gather_facts: false
-  tasks:
-  - name: Network interfaces Manager
-    include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.ios.ios
-      operations:
-        - name: detect
-      data_store:
-        scm:
-          origin:
-            url: "{{ your_github_repo }}"
-            token: "{{ github_access_token }}"
-            user:
-              name: "{{ ansible_github }}"
-              email: "{{ your_email@example.com }}"
-```
-
-#### Remediate configuration drift in interfaces Configuration
-- remediate operation will read the facts from the locally provided/default inventory and remediate if any configuration changes are there on the appliances using the overridden state.
-
-```yaml
-- name: Remediate configuration
-  hosts: rtr1
-  gather_facts: false
-  tasks:
-  - name: Network interfaces Manager
-    include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.ios.ios
-      operations:
-        - name: remediate
-      data_store:
-        local: "~/interfaces/network"
-```
-- remediate operation will read the facts from the GitHub repository and remediate if any configuration changes are there on the appliances using the overridden state.
-
-```yaml
-- name: Remediate configuration
-  hosts: rtr1
-  gather_facts: false
-  tasks:
-  - name: Network interfaces Manager
-    include_role:
-      name: network.interfaces.run
-    vars:
-      ansible_network_os: cisco.ios.ios
-      operations:
-        - name: remediate
-      data_store:
-        scm:
-          origin:
-            url: "{{ your_github_repo }}"
-            token: "{{ github_access_token }}"
-            user:
-              name: "{{ ansible_github }}"
-              email: "{{ your_email@example.com }}"
-```
 ## Testing
 
 The project uses tox to run `ansible-lint` and `ansible-test sanity`.

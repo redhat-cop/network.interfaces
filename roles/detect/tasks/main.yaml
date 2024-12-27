@@ -1,0 +1,9 @@
+---
+- name: Invoke detect function
+  ansible.builtin.include_role:
+    name: network.base.detect
+  vars:
+    resources:
+      - "interfaces"
+      - "l2_interfaces"
+      - "l3_interfaces"

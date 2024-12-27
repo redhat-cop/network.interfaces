@@ -1,0 +1,47 @@
+---
+- name: Debug
+  ansible.builtin.debug:
+    msg: "START network.interfaces detect role integration tests on connection={{ ansible_connection }}"
+
+- name: Cleanup, Read and Deploy
+  block:
+    - name: Reset configuration
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+    - name: Set resources
+      ansible.builtin.set_fact:
+        test_resources:
+          - "interfaces"
+          - "l2_interfaces"
+          - "l3_interfaces"
+
+    - name: Set local data_store
+      ansible.builtin.set_fact:
+        test_data_store:
+          local: "~/test_backup"
+
+    - name: Run network.interfaces validated content persist operation
+      ansible.builtin.include_role:
+        name: network.interfaces.persist
+      vars:
+        data_store: "{{ test_data_store }}"
+
+    - name: Run network.interfaces validated content with detect operation
+      ansible.builtin.include_role:
+        name: network.interfaces.detect
+      vars:
+        data_store: "{{ test_data_store }}"
+      register: interfaces_result
+
+    - name: Assert that gresult
+      ansible.builtin.assert:
+        that:
+          - interfaces_result.changed == false
+
+  always:
+    - name: Reset configuration
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "END network.interfaces detect role integration tests on connection={{ ansible_connection }}"

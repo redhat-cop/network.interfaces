@@ -1,0 +1,27 @@
+---
+- name: Debug
+  ansible.builtin.debug:
+    msg: "START network.interfaces health_check role integration tests on connection={{ ansible_connection }}"
+
+- name: Perform health check on interfaces protocol
+  block:
+    - name: Run network.interfaces validated content with health_checks operation
+      ansible.builtin.include_role:
+        name: network.interfaces.health_checks
+      vars:
+        interfaces_health_check:
+          name: health_check
+          vars:
+            details: true
+            checks:
+              - name: all_operational_state_up
+              - name: min_operational_state_up
+                min_count: 1
+              - name: all_admin_state_up
+              - name: min_admin_state_up
+                min_count: 1
+      register: interfaces_result
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "END network.interfaces health_check role integration tests on connection={{ ansible_connection }}"

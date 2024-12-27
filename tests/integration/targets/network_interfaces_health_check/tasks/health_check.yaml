@@ -1,9 +1,0 @@
----
-- name: Set Interfaces health facts
-  ansible.builtin.set_fact:
-    network_interfaces_checks: "{{ network_interfaces_health_facts | ansible.utils.health_check_view(network_interfaces_items) }}"
-
-
-- name: Check for accurate facts
-  ansible.builtin.assert:
-    that: "{{ network_interfaces_checks == expected_health_checks }}"
