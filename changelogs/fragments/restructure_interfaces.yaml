@@ -5,7 +5,7 @@ major_changes:
       The following changes were made to the `network.interfaces` collection:
       - Converted operations like `persist`, `detect`, `remediate`, `deploy` and `health_checks` into individual roles for better modularity and clarity.
       - Each role (`persist`, `detect`, `remediate`, `deploy`, `gather`, `health_checks`) now has its own README.md and integration tests.
-      - Updated all integration tests to align with the new role-based structure.
+      - Added integration tests to align with the new role-based structure.
       - Improved documentation and usage examples for each role to reflect the restructuring.
     issues:
       - id: "ANA-500"
