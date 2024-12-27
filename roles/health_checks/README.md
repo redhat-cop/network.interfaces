@@ -38,7 +38,6 @@ health_checks.yml
             - name: min_admin_state_up
               min_count: 1
 ```
-```
 
 ## License
 GNU General Public License v3.0 or later.

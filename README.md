@@ -88,8 +88,6 @@ ansible-galaxy collection install network.interfaces
        `all_administratnal_state_up`
        `min_administratnal_state_up`
 
-This role enables users to create a runtime brownfield inventory with all the INTERFACES configurations in terms of host vars. These host vars are ansible facts that have been gathered through the *_interfaces, *_l2_interfaces and *_l3_interfaces network resource module. The tasks offered by this role could be observed  below:
-
 ## Testing
 
 The project uses tox to run `ansible-lint` and `ansible-test sanity`.
