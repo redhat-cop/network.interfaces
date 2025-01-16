@@ -1,32 +1,23 @@
 # fmt: off
 [
+  {
+    "name": "interface_name",
+    "getval": '''(?P<name>\S+) is (?P<oper_state>\S+)''',
+    "result":
       {
-      "name": "interface_name",
-      "getval": '''(?P<name>\S+) is (?P<oper_state>\S+)''',
-      "result": {
-        "interfaces": {
+        "interfaces":
+          {
             "{{ name }}":
-              {
-                "name": "{{ name }}",
-                "operational": "{{oper_state}}"
-              }
-              }
-
-              },
-      "shared": True
-    },
+              { "name": "{{ name }}", "operational": "{{oper_state}}" },
+          },
+      },
+    "shared": True,
+  },
   {
     "name": "interface_admin",
     "getval": '''admin state is (?P<admin_state>\S+)''',
-    "result": {
-      "interfaces": {
-        "{{ name }}":
-          {
-            "admin": "{{admin_state}}"
-          }
-      }
-
-    }
-  }
+    "result":
+      { "interfaces": { "{{ name }}": { "admin": "{{admin_state}}" } } },
+  },
 ]
- # fmt: on
+# fmt: on

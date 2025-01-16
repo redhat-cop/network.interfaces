@@ -4,9 +4,9 @@
 
 - name: Set health checks facts
   ansible.builtin.set_fact:
-     health_checks: "{{ interfaces_health | network.interfaces.health_check_view(interfaces_health_check) }}"
+    health_checks: "{{ interfaces_health | network.interfaces.health_check_view(interfaces_health_check) }}"
 
 - name: INTERFACES health checks
   ansible.builtin.debug:
-     var: health_checks
+    var: health_checks
   failed_when: "'unsuccessful' == health_checks.status"
