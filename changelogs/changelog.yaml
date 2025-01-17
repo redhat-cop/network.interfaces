@@ -76,3 +76,13 @@ releases:
       - bump_215.yaml
       - update_readme.yaml
     release_date: "2024-06-11"
+  6.0.0:
+    changes:
+      major_changes:
+        - Restructured the network.interfaces collection by converting supported operations
+          into separate roles.
+    fragments:
+      - ci_fix.yaml
+      - pylint_fix.yaml
+      - restructure_interfaces.yaml
+    release_date: "2025-01-17"
