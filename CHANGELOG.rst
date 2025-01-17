@@ -4,6 +4,14 @@ Network Interfaces Collection Release Notes
 
 .. contents:: Topics
 
+v6.0.0
+======
+
+Major Changes
+-------------
+
+- Restructured the network.interfaces collection by converting supported operations into separate roles.
+
 v5.0.0
 ======
 
