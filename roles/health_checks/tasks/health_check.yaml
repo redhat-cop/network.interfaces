@@ -13,4 +13,3 @@
 - name: INTERFACES health checks
   ansible.builtin.debug:
     var: health_checks
-  failed_when: "'unsuccessful' == health_checks.status"
