@@ -1,0 +1,6 @@
+---
+- name: Include tasks
+  ansible.builtin.include_tasks: validation.yaml
+
+- name: Include health check tasks
+  ansible.builtin.include_tasks: health_check.yaml

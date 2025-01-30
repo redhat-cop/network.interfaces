@@ -1,8 +1,12 @@
 ---
-- name: Include tasks {{ ansible_network_os.split('.')[2] }}
-  ansible.builtin.include_tasks: ./{{ ansible_network_os.split('.')[2] }}.yaml
+- name: Include tasks
+  ansible.builtin.include_tasks: "{{ ansible_network_os.split('.')[2] }}.yaml"
 
-- name: Set health checks facts
+- name: Set interfaces health checks facts
+  ansible.builtin.set_fact:
+    interfaces_health: "{{ interfaces_health }}"
+
+- name: Set health checks fact
   ansible.builtin.set_fact:
     health_checks: "{{ interfaces_health | network.interfaces.health_check_view(interfaces_health_check) }}"
 
