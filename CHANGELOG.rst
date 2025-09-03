@@ -4,6 +4,24 @@ Network Interfaces Collection Release Notes
 
 .. contents:: Topics
 
+v7.0.0
+======
+
+Release Summary
+---------------
+
+With this release, the minimum required version of `ansible-core` for this collection is `2.19.0`. The last version known to be compatible with `ansible-core` versions below `2.19` is v6.0.0.
+
+Major Changes
+-------------
+
+- Bumping `dependencies` of ansible.netcommon to `>=8.1.0`, since previous versions of the dependency had compatibility issues with `ansible-core>=2.19`.
+
+Bugfixes
+--------
+
+- Fix health_check role.
+
 v6.0.0
 ======
 

@@ -11,7 +11,7 @@ releases:
       - add_docs.yaml
       - add_network_interfaces.yaml
       - fix_collection_name.yaml
-    release_date: "2023-03-07"
+    release_date: '2023-03-07'
   2.0.0:
     changes:
       bugfixes:
@@ -24,7 +24,7 @@ releases:
       - enable_scm.yaml
       - fix_6.yaml
       - update_readme.yaml
-    release_date: "2023-05-11"
+    release_date: '2023-05-11'
   3.0.0:
     changes:
       doc_changes:
@@ -38,27 +38,26 @@ releases:
     fragments:
       - documentation_fix.yml
       - update_action_to_operation.yaml
-    release_date: "2023-07-26"
+    release_date: '2023-07-26'
   3.0.1:
     changes:
       bugfixes:
         - Add health_check support for EOS platform(https://github.com/redhat-cop/network.interfaces/issues/19).
     fragments:
       - Add_health_check_support_Eos.yaml
-    release_date: "2023-11-30"
+    release_date: '2023-11-30'
   4.0.0:
     changes:
       major_changes:
         - Bumping `requires_ansible` to `>=2.14.0`, since previous ansible-core versions
           are EoL now.
-      release_summary:
-        Starting from this release, the minimum `ansible-core` version
+      release_summary: Starting from this release, the minimum `ansible-core` version
         this collection requires is `2.14.0`. The last known version compatible with
         ansible-core<2.14 is `v3.0.1`.
     fragments:
       - trivial_lint.yaml
       - update_required_ansible.yaml
-    release_date: "2023-12-01"
+    release_date: '2023-12-01'
   5.0.0:
     changes:
       doc_changes:
@@ -66,16 +65,14 @@ releases:
       major_changes:
         - Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions
           are EoL now.
-      release_summary:
-        "With this release, the minimum required version of `ansible-core`
+      release_summary: 'With this release, the minimum required version of `ansible-core`
         for this collection is `2.15.0`. The last version known to be compatible with
         `ansible-core` versions below `2.15` is v4.0.0.
-
-        "
+        '
     fragments:
       - bump_215.yaml
       - update_readme.yaml
-    release_date: "2024-06-11"
+    release_date: '2024-06-11'
   6.0.0:
     changes:
       major_changes:
@@ -85,4 +82,18 @@ releases:
       - ci_fix.yaml
       - pylint_fix.yaml
       - restructure_interfaces.yaml
-    release_date: "2025-01-17"
+    release_date: '2025-01-17'
+  7.0.0:
+    changes:
+      bugfixes:
+        - Fix health_check role.
+      major_changes:
+        - Bumping `dependencies` of ansible.netcommon to `>=8.1.0`, since previous versions
+          of the dependency had compatibility issues with `ansible-core>=2.19`.
+      release_summary: 'With this release, the minimum required version of `ansible-core`
+        for this collection is `2.19.0`. The last version known to be compatible with
+        `ansible-core` versions below `2.19` is v6.0.0.
+        '
+    fragments:
+      - fix_helath_check.yaml
+    release_date: '2025-09-03'
